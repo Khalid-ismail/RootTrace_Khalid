@@ -24,6 +24,8 @@ void read_file(void) {
 
 				 //Load images button
 
+					 //Testing_3
+
 				 /*array<String^>^  s = this->openFileDialog1->FileNames;
 				 textBox1->Text::set("Loading...");
 				 toolStripButton1->Enabled::set(true);
