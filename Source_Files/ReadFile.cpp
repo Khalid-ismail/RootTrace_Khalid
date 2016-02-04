@@ -20,6 +20,7 @@ void read_file(void) {
 				 if (result==System::Windows::Forms::DialogResult::OK) {
 
 					 //Khalid_Test_Github!!
+					 //Khalid_Test2_Github
 
 				 //Load images button
 
