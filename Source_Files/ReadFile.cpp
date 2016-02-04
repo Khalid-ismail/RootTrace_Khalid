@@ -19,6 +19,8 @@ void read_file(void) {
 				 //System::Windows::Forms::DialogResult result = this->openFileDialog1->ShowDialog();
 				 if (result==System::Windows::Forms::DialogResult::OK) {
 
+					 //Khalid_Test_Github!!
+
 				 //Load images button
 
 				 /*array<String^>^  s = this->openFileDialog1->FileNames;
