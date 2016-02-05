@@ -17,18 +17,9 @@ void read_file(void) {
 	}
 
 				 //System::Windows::Forms::DialogResult result = this->openFileDialog1->ShowDialog();
-				 if (result==System::Windows::Forms::DialogResult::OK) {
-
-					 //Khalid_Test_Github!!
-					 //Khalid_Test2_Github
-
+				 /*if (result==System::Windows::Forms::DialogResult::OK) {
 				 //Load images button
-
-					 //Testing_3
-					 //Testing_4
-					 //Testing_5
-
-				 /*array<String^>^  s = this->openFileDialog1->FileNames;
+				 array<String^>^  s = this->openFileDialog1->FileNames;
 				 textBox1->Text::set("Loading...");
 				 toolStripButton1->Enabled::set(true);
 				 toolStripButton2->Enabled::set(true);
@@ -44,18 +35,18 @@ void read_file(void) {
 
 
 				 //try to set to output subfolder?
-				 bool outputDirectoryExists = System::IO::Directory::Exists((s[0]->Substring(0, s[0]->LastIndexOf("\\")))+"\\output\\");
+				 /*bool outputDirectoryExists = System::IO::Directory::Exists((s[0]->Substring(0, s[0]->LastIndexOf("\\")))+"\\output\\");
 				 if (outputDirectoryExists) outputFolderBrowser->SelectedPath::set( (s[0]->Substring(0, s[0]->LastIndexOf("\\")))+"\\output\\");
 				 else outputFolderBrowser->SelectedPath::set(s[0]->Substring(0, s[0]->LastIndexOf("\\")));
-
+*/ //K_I
 				 //outputFolderBrowser->SelectedPath::set(s[0]->Substring(0, s[0]->LastIndexOf("\\")));
-				 tb_outputFolder->Text::set(outputFolderBrowser->SelectedPath::get());
+/*				 tb_outputFolder->Text::set(outputFolderBrowser->SelectedPath::get());
 				 outputFolderString = this->outputFolderBrowser->SelectedPath;
 				 mainprog->setOutputFolderString(outputFolderString);
 
 				 workingFolder = s[0]->Substring(0, s[0]->LastIndexOf("\\"));
 				 this->Text = this->Text::get()+" - "+workingFolder;
-				 mainprog->setWorkingFolder(workingFolder);
+				 mainprog->setWorkingFolder(workingFolder);*/ //K_I
 
 				 /*//help
 				 help = gcnew System::Windows::Forms::HelpProvider;
