@@ -15,5 +15,8 @@ int main(/*array<System::String ^> ^args*/) //K_I
 
 	// Create the main window and run it
 	Application::Run(gcnew Form1());
+
+	mainprog->init(s, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*/, this);
+
 	return 0;
 }
