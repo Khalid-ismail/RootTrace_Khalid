@@ -1293,7 +1293,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 
 
-	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
+/*	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
 	//array<float,3>^ curvatures2 = gcnew array<float,3>(max_files, max_length, max_roots); //store using new method
 	array<float,3>^ lengthForCurvature = gcnew array<float,3>(max_files, max_length, max_roots);
 	for (int temp1=0; temp1<max_files; temp1++) 
@@ -1305,7 +1305,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	array<float,2>^ finalLengths = gcnew array<float,2>(max_files, max_numroots);
 
-	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);
+	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);*/ //K_I check the importance of this part
 
 	double calib_measures[3];
 
