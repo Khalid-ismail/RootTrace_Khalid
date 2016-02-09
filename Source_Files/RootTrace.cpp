@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "Form1.h"
 #include "RootTrace.h"
+#include "ReadFile.h"
 
 using namespace RootTrace2;
 
@@ -17,6 +18,7 @@ int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
 	// Create the main window and run it
 	//Application::Run(gcnew Form1()); //K_I
 	int i;
+	UCHAR tb_lr = 0;
 
 	char filename[100];
 	for(i=0;i<100;i++)
@@ -26,7 +28,9 @@ int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
 		else {filename[i] = argv[1][i];}
 	}
 
-	m_main.init(s, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*/, this);
+	read_file(argv[1]);
+
+	m_main.init(filename, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*//*, this*/);
 
 	return 0;
 }

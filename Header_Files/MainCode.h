@@ -72,7 +72,7 @@ class CMainCode {
 	CMainCode();
 	
 	void on_mouse( int event, int x, int y, int flags);
-	void init(array<System::String^>^ filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*/, System::Windows::Forms::Form^ mainWindow);//Motion mixture UNUSED locally??
+	void init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/);//Motion mixture UNUSED locally??
 	static char* myspf(char* strToFormat, ...);				// jon's version of sprintf =)
 	static void imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colour);
 	static void imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colour, float fontsize);

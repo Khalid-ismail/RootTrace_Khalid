@@ -8,8 +8,8 @@
 #include <stdio.h>
 
 // Function to read image file
-void read_file(void) {
-	FILE *inImage = fopen("filename","r");
+void read_file(char *imagefile) {
+	FILE *inImage = fopen(imagefile,"r");
 
 	//If file doesn't exist then abort
 	if(inImage == NULL){

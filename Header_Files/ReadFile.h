@@ -14,4 +14,4 @@
 
 #endif /* SOURCE_FILES_READFILE_H_ */
 
-void read_file(void);
+void read_file(char *imagefile);

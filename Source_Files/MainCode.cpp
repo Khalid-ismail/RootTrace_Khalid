@@ -1224,7 +1224,7 @@ void CMainCode::saveBGMask(System::String^ filename) {
 
 }
 
-void CMainCode::init(array<System::String^>^ filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*/, System::Windows::Forms::Form^ mainWindow) {
+void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
 	
 	
 	
@@ -1282,13 +1282,13 @@ void CMainCode::init(array<System::String^>^ filenames, UCHAR idealr, UCHAR idea
 	}
 
 
-	if (filenames->Length::get()>max_files) {
+	/*if (filenames->Length::get()>max_files) {
 		MessageBox::Show("WARNING: maximum number of files ("+max_files+") exceeded. Exiting...");
 		exit(-10);
-	}
+	}*/ //K_I to be added later
 
 
-	mainWindowGlobal = mainWindow;
+	//mainWindowGlobal = mainWindow; //K_I
 
 
 
