@@ -31,7 +31,7 @@ CStatsWriter::CStatsWriter()
 	if (!m_fout.is_open()) 
 	{
 		cout << "Cannot open logfile measures.csv"<< endl;
-		MessageBox::Show("Cannot open logfile measures.csv. Is it open already??");
+		//MessageBox::Show("Cannot open logfile measures.csv. Is it open already??"); //K_I
 	}
 }
 

@@ -126,6 +126,7 @@ float color_bins[num_cols_in_map]; // curvature
 
 
 // ASAD
+
 double angle1, angle2;
 double angle1Array[10000];
 double angle2Array[10000];
@@ -1285,7 +1286,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	/*if (filenames->Length::get()>max_files) {
 		MessageBox::Show("WARNING: maximum number of files ("+max_files+") exceeded. Exiting...");
 		exit(-10);
-	}*/ //K_I to be added later
+	}*/ //K_I to be added later (More than a file)
 
 
 	//mainWindowGlobal = mainWindow; //K_I
@@ -1325,10 +1326,10 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	char savepath[255];
 	
 	
-	System::Array::Sort(filenames); // SORTING!!
+	//System::Array::Sort(filenames); // SORTING!! //K_I
 
-	m_filenames = gcnew array<String^>(filenames->Length);
-	filenames->CopyTo(m_filenames, 0);
+	/*m_filenames = gcnew array<String^>(filenames->Length);
+	filenames->CopyTo(m_filenames, 0);*/ //K_I
 	
 
 	CStatsWriter stats, debugstats, tip_stats, tip_angles, tip_angles_vert, trace_points;
