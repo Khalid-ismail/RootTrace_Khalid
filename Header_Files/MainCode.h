@@ -116,7 +116,7 @@ private:
 	void doGraphTraversal(CvGraph* g, System::Windows::Forms::Form^ mainWindow);
 	//double cum_sq_devs, st_dev;
 	vector<MyPath> paths;
-	void mainWindowText(System::Windows::Forms::Form^ mainWindow, System::String ^string);
+	//void mainWindowText(System::Windows::Forms::Form^ mainWindow, System::String ^string); //K_I
 	double BG_mean_r;
 	double BG_mean_g; 
 	double BG_mean_b;
@@ -125,7 +125,7 @@ private:
 	double BG_st_dev_b;
 	int rule2_count;
 	bool rule_2_polarity;
-	IplImage* loadImage(const char* loadpath, System::Windows::Forms::Form^ mainWindow);
+	IplImage* loadImage(const char* loadpath);
 	double evaluate_gaussian(double val, double sigma);
 	bool getBGStats(IplImage* bg_mask, IplImage* image);
 	//CStatsWriter prob_stats;

@@ -1096,23 +1096,24 @@ void CMainCode::smooth(Form^ mainWindow, IplImage* i){
 			mainWindowText(mainWindow, "Filtered / smoothed.");
 }
 
-void CMainCode::mainWindowText(Form^ mainWindow, String^ string) {
+/*void CMainCode::mainWindowText(Form^ mainWindow, String^ string) {
 	((RootTrace2::Form1^)mainWindow)->textBox1->Text::set(((RootTrace2::Form1^)mainWindow)->textBox1->Text::get()+"\r\n"+string);
 
 
-}
+}*/ //K_I
 
-IplImage* CMainCode::loadImage(const char* loadpath, System::Windows::Forms::Form^ mainWindow) {
+IplImage* CMainCode::loadImage(const char* loadpath) {
 
-	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);
+	//RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow); //K_I
 	IplImage* limage;
 	IplImage* loadedi = cvLoadImage(loadpath);
 	if (loadedi==NULL) {
-		MessageBox::Show("Sorry, cannot load that file.", "Bye", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+		//MessageBox::Show("Sorry, cannot load that file.", "Bye", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+		printf("Sorry, cannot load that file.");
 		exit(-10);
 	}
 
-	if (/*(loadedi->width>2000 || loadedi ->height>2000) && */mainWindow_RT->autoResizeLargeImages()) {
+	/*if ((loadedi->width>2000 || loadedi ->height>2000) && mainWindow_RT->autoResizeLargeImages()) {
 		
 		//DialogResult result = MessageBox::Show("The image is very large.  Do you want to downsize? (recommend Yes)", "Image Size",MessageBoxButtons::YesNo, MessageBoxIcon::Information);
 		//if (result == DialogResult::Yes) {
@@ -1121,7 +1122,7 @@ IplImage* CMainCode::loadImage(const char* loadpath, System::Windows::Forms::For
 			mainWindowText(mainWindow, "Resized to 50%");
 			//limage = cvCloneImage(image);
 
-		} else 
+		} else*/ //K_I auto resize currently desabled
 			limage = cvCloneImage(loadedi);
 		
 
@@ -1346,9 +1347,9 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	char gravstring[255];
 
 
-
 	//load last image, for info
-	char* last_filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenames->Length-1]);
+	//char* last_filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenames->Length-1]); //K_I - Disable loading last image for time being
+	char* last_filename = filenames;
 	last_image = cvLoadImage(last_filename);
 			// transform last image. Must be done or can break when cropping
 			if (flip_hor) {
@@ -1387,27 +1388,27 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 
 	// LOOP THROUGH FILES  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	while (filenumber<filenames->Length) {
+	while (filenumber< 1/*filenames->Length*/) { //K_I Only one file now
 		
 	//mainWindowText(mainWindow_RT, "File number "+filenumber);
 	
-	char* filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenumber]);
-	
+	//char* filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenumber]); //K_I
+	char* filename = filenames;
 	sprintf(loadpath,    "%s", filename);
 
 	
 	
-	String^ s = filenames[filenumber]->Insert(filenames[filenumber]->LastIndexOf("\\")+1, "_");
+	/*String^ s = filenames[filenumber]->Insert(filenames[filenumber]->LastIndexOf("\\")+1, "_");
 	
 
 	String^ justFilename = filenames[filenumber]->Substring(filenames[filenumber]->LastIndexOf("\\")+1);
-	String^ justSaveFilename = s->Substring(filenames[filenumber]->LastIndexOf("\\")+1);
+	String^ justSaveFilename = s->Substring(filenames[filenumber]->LastIndexOf("\\")+1);*/ //K_I
 
 	
-	image = loadImage(loadpath, mainWindow);
-
-	mainWindow_RT->setProgressBar(( ((double)filenumber) / (filenames->Length)) *100);
-	mainWindow_RT->setMessage(justFilename);
+	//image = loadImage(loadpath, mainWindow); K_I
+	image = loadImage(loadpath);
+/*	mainWindow_RT->setProgressBar(( ((double)filenumber) / (filenames->Length)) *100);
+	mainWindow_RT->setMessage(justFilename);*/ //K_I
 
 	
 
