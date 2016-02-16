@@ -978,7 +978,8 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 				
 				
 				if (liveZoomImg->width > base_image->width || liveZoomImg->height > base_image->height) {
-					MessageBox::Show("Basic image is smaller than the zoom window display due to over cropping.\n Cannot create zoom window image. ", "Error");
+					//MessageBox::Show("Basic image is smaller than the zoom window display due to over cropping.\n Cannot create zoom window image. ", "Error"); //K_I
+					printf("Basic image is smaller than the zoom window display due to over cropping.\n Cannot create zoom window image.");
 					exit(-1);
 				}
 				
@@ -1155,7 +1156,7 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 	 //mainWindowText(mainWindow, "test");
 	 if (flip_hor) {
 		 cvFlip(limage, limage, 1);
-		 mainWindowText(mainWindow, "Flipping.");
+		 //mainWindowText(mainWindow, "Flipping."); //K_I
 	 }
 	 if (rotate_ccw) {
 			IplImage* rotated = cvCreateImage(cvSize(limage->height, limage->width), 8, 3); //size rotated 90 degrees
@@ -1434,8 +1435,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	if (croprect.width!=-1) cropImages(croprect);
 
-	
-	
+
 	crop = cvCreateImage(cvSize(cropx, cropy), 8, 3);
 
 	// AUTO SMOOTH AND ENHANCE!!! //moved to loadImage
@@ -1445,11 +1445,11 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	if (filenumber==0) //first time only 
 	{
 		cvSaveImage("measuresi.jpg", measuresi); 
-		preview_lengthsi = cvCreateImage(cvSize(filenames->Length+2, 800), 8, 1);
+		//preview_lengthsi = cvCreateImage(cvSize(filenames->Length+2, 800), 8, 1);
+		preview_lengthsi = cvCreateImage(cvSize(3, 800), 8, 1); //K_I for one file only
 		cvZero(preview_lengthsi);
 		//mainWindow_RT->updateMeasureWindow(measuresi);
 	}
-
 
 	//graph init
 	CvMemStorage *g_storage = cvCreateMemStorage();
