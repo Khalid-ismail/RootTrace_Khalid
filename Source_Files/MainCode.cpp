@@ -1431,9 +1431,8 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	if (enableEnhancing) interactiveEnhance(m_bilat_filter, m_med_filter, m_gaus_filter, m_suppressHor, m_bLocaLMaxFilter, m_bblowHighlights, m_blowHighlights, m_bgRemoval);
 
 	
-
-
 	if (croprect.width!=-1) cropImages(croprect);
+
 
 
 	crop = cvCreateImage(cvSize(cropx, cropy), 8, 3);
