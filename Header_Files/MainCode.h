@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <stdio.h>
 
 #include "../Header_Files/Condensation.h"
 #include "../Header_Files/stdafx.h"
@@ -45,6 +46,8 @@ struct MyPath
 	double prob;
 	double dist;
 };
+
+int _vscprintf (const char * format, va_list pargs);
 
 class CMainCode {
 

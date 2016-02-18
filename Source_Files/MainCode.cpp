@@ -899,7 +899,8 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 
 				num_roots++;
 				if (num_roots>=max_numroots) {
-					MessageBox::Show( "Sorry, limited to "+max_numroots+" roots per plate at the moment. No more please","No more roots");
+					//MessageBox::Show( "Sorry, limited to "+max_numroots+" roots per plate at the moment. No more please","No more roots"); //K_I
+					printf("Sorry, limited to 40 roots per plate at the moment. No more please");
 				}
 				cvShowImage("Image", i_copy);
 			}
@@ -1031,7 +1032,14 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 
  }//on_mouse
 
-
+int _vscprintf (const char * format, va_list pargs) {
+    int retval;
+    va_list argcopy;
+    va_copy(argcopy, pargs);
+    retval = vsnprintf(NULL, 0, format, argcopy);
+    va_end(argcopy);
+    return retval;
+ }
 
 
 
