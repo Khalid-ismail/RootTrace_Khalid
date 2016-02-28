@@ -45,8 +45,6 @@ OF SUCH DAMAGE.
 #include "../Header_Files/queue.h"
 #include "../Header_Files/stack.h"
 
-//Test Commit
-
  
 using namespace std;
 //using namespace System::Windows::Forms; //K_I
@@ -57,6 +55,8 @@ using namespace std;
 
 
 //using namespace RootTrace2;
+
+
 
 #define PI 3.14159265
 
@@ -1042,7 +1042,6 @@ int _vscprintf (const char * format, va_list pargs) {
  }
 
 
-
  char* CMainCode::myspf(char* strToFormat, ...)				// my version of sprintf =)
 {
 	va_list varArgLst;
@@ -1107,8 +1106,6 @@ void CMainCode::smooth(Form^ mainWindow, IplImage* i){
 
 /*void CMainCode::mainWindowText(Form^ mainWindow, String^ string) {
 	((RootTrace2::Form1^)mainWindow)->textBox1->Text::set(((RootTrace2::Form1^)mainWindow)->textBox1->Text::get()+"\r\n"+string);
-
-
 }*/ //K_I
 
 IplImage* CMainCode::loadImage(const char* loadpath) {
@@ -1134,7 +1131,6 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 		} else*/ //K_I auto resize currently desabled
 			limage = cvCloneImage(loadedi);
 		
-
 	//}  
 	/*else
 	if ((loadedi->width>2000 || loadedi ->height>2000) && mainWindow_RT->autoResizeLargeImages()) {
@@ -1199,9 +1195,6 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 	// AUTO SMOOTH AND ENHANCE!!!  now done with enhance tab
 	//if (mainWindow_RT->autoSmoothImages()) smooth(mainWindow, limage);
 	//if (mainWindow_RT->autoEnhanceImages()) enhance(mainWindow, limage);
-	
-
-
 	
 
 
@@ -1327,14 +1320,11 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	char* argv[1];
 	argv[0] = "test";
 
-
-
 	const char* folder   = "test";
 	
 	
 	char loadpath[255];
 	char savepath[255];
-	
 	
 	//System::Array::Sort(filenames); // SORTING!! //K_I
 
@@ -1439,6 +1429,8 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	if (enableEnhancing) interactiveEnhance(m_bilat_filter, m_med_filter, m_gaus_filter, m_suppressHor, m_bLocaLMaxFilter, m_bblowHighlights, m_blowHighlights, m_bgRemoval);
 
 	
+
+
 	if (croprect.width!=-1) cropImages(croprect);
 
 
