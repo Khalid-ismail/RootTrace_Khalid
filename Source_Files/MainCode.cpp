@@ -307,11 +307,11 @@ array<System::String^>^ CMainCode::loadFileLists() {
 
 }
 
-System::Windows::Forms::Form^ CMainCode::getMainWindow() {
+/*System::Windows::Forms::Form^ CMainCode::getMainWindow() {
 
 
  return mainWindowGlobal;
-}
+}*/ //K_I
 
 void CMainCode::loadStartPoints(String^ filename) {
 	   
@@ -663,7 +663,7 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 
     case CV_EVENT_LBUTTONDOWN:
         {
-			RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)getMainWindow());
+			//RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)getMainWindow()); //K_I
 			
 			
 			if (doingManualMeasures) {
@@ -711,7 +711,7 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 			
 			else{//background
 
-			if (mainWindow_RT->getSelectBG()) {
+			if (true /*mainWindow_RT->getSelectBG()*/) {    //K_I
 				  
 				
 				// select a region for background stats
@@ -801,7 +801,7 @@ void CMainCode::on_mouse( int event, int x, int y, int flags)
 
 		case CV_EVENT_LBUTTONUP:
 		{
-			RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)getMainWindow());
+			//RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)getMainWindow()); //K_I
 			
 			if (!doingManualMeasures)
 			if (doCrop&&crop1.x!=-1) {
@@ -1055,13 +1055,29 @@ int _vscprintf (const char * format, va_list pargs) {
 
 	return resStr;
 }
+
+float max_float (float x, float y)
+{
+	if (x <= y)
+		{return x;}
+	return y;
+}
+
+int max_int (int x, int y)
+{
+	if (x <= y)
+		{return x;}
+	return y;
+}
+
 void CMainCode::imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colour)
 {
 	// Outputs some text to an image in one line of code - ahhhhh how nice!
 
 	CvFont font;
-	float fontsize = max(img->height/1000, 0.6);
-	int fontwidth = max(ceil(fontsize*2),1);
+	float x = img->height/1000;
+	float fontsize = max_float(img->height/1000, 0.6);
+	int fontwidth = max_int(ceil(fontsize*2),1);
 	cvInitFont(&font, CV_FONT_VECTOR0, fontsize,fontsize,0,fontwidth);
 	cvPutText(img, message, pos, &font, colour);	
 	delete message;
@@ -1072,7 +1088,7 @@ void CMainCode::imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colou
 	// Outputs some text to an image in one line of code - ahhhhh how nice!
 
 	CvFont font;
-	int fontwidth = max(ceil(fontsize*2),1);
+	int fontwidth = max_int(ceil(fontsize*2),1);
 	cvInitFont(&font, CV_FONT_VECTOR0, fontsize,fontsize,0,fontwidth);
 	cvPutText(img, message, pos, &font, colour);	
 	delete message;

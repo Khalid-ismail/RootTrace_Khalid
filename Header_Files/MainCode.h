@@ -48,6 +48,8 @@ struct MyPath
 };
 
 int _vscprintf (const char * format, va_list pargs);
+float max_float (float x, float y);
+int max_int (int x, int y);
 
 class CMainCode {
 
