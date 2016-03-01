@@ -1159,7 +1159,6 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 	}*/
 	//else
 		//limage = cvCloneImage(loadedi);
-
 	 
 	 cvReleaseImage(&loadedi);
 
@@ -1207,16 +1206,11 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 
 	 }
 
-
 	// AUTO SMOOTH AND ENHANCE!!!  now done with enhance tab
 	//if (mainWindow_RT->autoSmoothImages()) smooth(mainWindow, limage);
 	//if (mainWindow_RT->autoEnhanceImages()) enhance(mainWindow, limage);
-	
-
-
 	 return limage;
 }
-
 
 void CMainCode::setBGMask(System::String^ filename) {
 
@@ -1236,7 +1230,6 @@ void CMainCode::setBGMask(System::String^ filename) {
 
 }
 
-
 void CMainCode::saveBGMask(System::String^ filename) {
 
 	char* filenameCH = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename);
@@ -1246,9 +1239,6 @@ void CMainCode::saveBGMask(System::String^ filename) {
 
 void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
 	
-	
-	
-
 	//NULL all image pointers
 	image = originali = previousi = crop = tempimage = measuresi = measuresiTaboo = smoothedi = output = debuggraph = preview_lengthsi = i_copy = i_copy2 = last_image = base_image = NULL;
 
@@ -1427,9 +1417,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	
 
-	
-
-
 	originali = cvCloneImage(image);
 
 	
@@ -1439,12 +1426,9 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	measuresi = cvCloneImage(image);
 	measuresiTaboo = cvCloneImage(image); //now updated after start, in case of enhancing.
 	//base_image = cvCloneImage(originali);
-
 	
 	//MessageBox::Show("enableEnhancing = "+enableEnhancing);
 	if (enableEnhancing) interactiveEnhance(m_bilat_filter, m_med_filter, m_gaus_filter, m_suppressHor, m_bLocaLMaxFilter, m_bblowHighlights, m_blowHighlights, m_bgRemoval);
-
-	
 
 
 	if (croprect.width!=-1) cropImages(croprect);
@@ -1503,7 +1487,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		
 		checkKeyPresses(code);
 		if (quitnow) {
-			mainWindowText(mainWindow, "Finished");	
+			//mainWindowText(mainWindow, "Finished");	//K_I
 			break;
 		}
 
