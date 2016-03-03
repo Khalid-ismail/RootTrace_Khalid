@@ -1501,10 +1501,10 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 
 
-	sprintf(savepath,    "%s\\%s.%s", outputFolderString, justSaveFilename, outputExtension);//was jpg
-	saveComments();//make sure at least the filenames are saved here
+	sprintf(savepath,    "%s\\%s.%s", outputFolderString, /*justSaveFilename*/ filename, outputExtension);//was jpg //K_I
+	//saveComments();//make sure at least the filenames are saved here //Disabling saving comments //K_I
 	//backup quicksave files
-	if (savedStartPoints) {
+	/*if (savedStartPoints) {
 		char quicksavep[256];
 		char quicksavepout[256];
 		sprintf(quicksavepout,"%s\\quicksave_starts.xml.bak", outputFolderString );
@@ -1524,7 +1524,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		//mainprog->saveStartPoints(workingFolder+"\\quicksave_starts.xml");
 		//mainprog->saveBGMask(workingFolder+"\\quicksave_background.bmp");
 
-	}
+	}*/ //Deactivating saved points //K_I
 
 
 	
@@ -6208,7 +6208,7 @@ void CMainCode::onClose(void)
 }
 
 
-void CMainCode::saveComments()
+/*void CMainCode::saveComments()
 {
 	char commentPath[512];
 	sprintf(commentPath, "%s\\metadata.txt", outputFolderString);
@@ -6235,7 +6235,7 @@ void CMainCode::saveComments()
 		output.close();
 		
 	
-}
+}*/ //Deactivating saving comments //K_I
 
 
 void CMainCode::setInvert(bool flag)
