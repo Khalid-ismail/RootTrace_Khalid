@@ -116,7 +116,7 @@ private:
 	int calib_line_points, num_calib_traces;
 	CvPoint calib_line1, calib_line2;
 	double calib_dist;
-	void doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double proSigmaX, double proSigmaY, UCHAR new_state, CvGraph* g, int rootnum, int filenum,  double prior_bg,  double upperHyst, double lowerHyst, System::Windows::Forms::Form^ mainWindow);
+	void doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double proSigmaX, double proSigmaY, UCHAR new_state, CvGraph* g, int rootnum, int filenum/*,  double prior_bg,  double upperHyst, double lowerHyst, System::Windows::Forms::Form^ mainWindow*/);   //K_I
 	int rootIndex;
 	void doGraphTraversal(CvGraph* g, System::Windows::Forms::Form^ mainWindow);
 	//double cum_sq_devs, st_dev;

@@ -1555,10 +1555,10 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 
 		// -Asad
-
+		// Creating files //K_I
 		// Moved so that output folder should now be set before this happens
 		char statspath[255];
-		sprintf(statspath,    "%s\\%s_data.csv", outputFolderString, justFilename);
+		sprintf(statspath,    "%s\\%s_data.csv", outputFolderString, /*justFilename*/filename); //K_I
 		stats.ChangeFile(statspath);
 		stats.WriteTitles("File, Roots...");
 		
@@ -1603,7 +1603,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	while(rootnum<num_roots){ 
 
-	doRootTracking( idealR, idealG, idealB, proSigmaX, proSigmaY, new_state, g, rootnum, filenumber, mainWindow_RT->getSlider_BGprior_value(), mainWindow_RT->getSlider_upperHyst(), mainWindow_RT->getSlider_lowerHyst(), mainWindow);
+	doRootTracking( idealR, idealG, idealB, proSigmaX, proSigmaY, new_state, g, rootnum, filenumber/*,mainWindow_RT->getSlider_BGprior_value(), mainWindow_RT->getSlider_upperHyst(), mainWindow_RT->getSlider_lowerHyst(), mainWindow*/);    //K_I
 
 
 	doGraphTraversal(g, mainWindow);
@@ -3486,7 +3486,8 @@ void CMainCode::MyGetPixel(IplImage *m_image, int x, int y, UCHAR *b, UCHAR *g, 
 	   }
 }
 
-void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double proSigmaX, double proSigmaY, UCHAR new_state, CvGraph* g, int rootnum, int filenum, double prior_bg, double upperHyst, double lowerHyst, System::Windows::Forms::Form^ mainWindow) {
+void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double proSigmaX, double proSigmaY, UCHAR new_state, CvGraph* g, int rootnum, int filenum /*, double prior_bg, double upperHyst, double lowerHyst, System::Windows::Forms::Form^ mainWindow*/)  //K_I
+{
 	
 
 	//MessageBox::Show("upperHyst = "+upperHyst);
@@ -3494,7 +3495,7 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	int clickx = start_ps[rootnum].x;
 	int clicky = start_ps[rootnum].y;
 
-	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);
+	//RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow); //K_I
 
 	//MessageBox::Show("upperHyst = "+upperHyst); // this DOES change during running of the program
 

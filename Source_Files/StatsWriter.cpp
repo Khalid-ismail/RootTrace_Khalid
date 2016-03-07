@@ -13,7 +13,7 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 using namespace std;
-using namespace System::Windows::Forms;
+//using namespace System::Windows::Forms; //K_I
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -40,13 +40,13 @@ CStatsWriter::CStatsWriter(char* filepath)
 	m_fout.open(filepath);
 	char cfilepath[512];
 	sprintf(cfilepath, "Cannot open logfile %s. Is it open already??", filepath);
-	System::String ^s = gcnew System::String(cfilepath);
+	//System::String ^s = gcnew System::String(cfilepath);
 	
 
 	if (!m_fout.is_open()) 
 	{
 		cout << "Cannot open logfile"<<filepath<< endl;
-		MessageBox::Show(s);
+		//MessageBox::Show(s); //K_I
 	}
 }
 
@@ -73,7 +73,7 @@ void CStatsWriter::WriteTitles(char* s)
 		//m_fout << endl;  //  extra blank row after titles
 	} else {
 		cout <<"WARNING: CANNOT WRITE TO FILE"<<endl;
-		MessageBox::Show("Cannot write to logfile. Is it open already??");
+		//MessageBox::Show("Cannot write to logfile. Is it open already??"); //K_I
 	}
 }
 
@@ -112,7 +112,7 @@ void CStatsWriter::AppendDataRow(char* s)
 		m_fout << s << endl;
 	} else {
 		cout <<"WARNING: CANNOT WRITE TO FILE"<<endl;
-		MessageBox::Show("Cannot write to logfile. Is it open already??");
+		// MessageBox::Show("Cannot write to logfile. Is it open already??"); //K_I
 	}
 	
 }
@@ -130,12 +130,12 @@ void CStatsWriter::ChangeFile(char* s)
 
 	char cfilepath[512];
 	sprintf(cfilepath, "Cannot open logfile %s. Is it open already??", s);
-	System::String ^ss = gcnew System::String(cfilepath);
+	//System::String ^ss = gcnew System::String(cfilepath); //K_I
 	
 	if (!m_fout.is_open()) 
 	{
 		cout <<"WARNING: CANNOT WRITE TO FILE"<<endl;
-		MessageBox::Show(ss);
+		//MessageBox::Show(ss); //K_I
 	}
 
 }
@@ -147,7 +147,7 @@ void CStatsWriter::AppendDataRow_NoReturn(char *s)
 		m_fout << s <<",";
 	} else {
 		cout <<"WARNING: CANNOT WRITE TO FILE"<<endl;
-		MessageBox::Show("Cannot write to logfile. Is it open already??");
+		//MessageBox::Show("Cannot write to logfile. Is it open already??"); //K_I
 	}
 }
 
@@ -158,6 +158,6 @@ if (m_fout.is_open() )
 		m_fout << endl;
 	} else {
 		cout <<"WARNING: CANNOT WRITE TO FILE"<<endl;
-		MessageBox::Show("Cannot write to logfile. Is it open already??");
+		//MessageBox::Show("Cannot write to logfile. Is it open already??"); //K_I
 	}
 }
