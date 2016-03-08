@@ -3510,7 +3510,8 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	cout<<"Starting tracking at "<<best_lock.x<<", "<<start_ps[rootnum].y<<endl;
 	//CCondensation cond; // NEW - why does this break? Becuase its used elsewhere.  Init'ing should reset it anyway
 	//cond.init(0, clickx, clicky, 0, 0,idealr, idealg, idealb, new_state, proSigmaX, proSigmaY);
-	cond.init(0, best_lock.x, best_lock.y, 0, 0,idealr, idealg, idealb, new_state, proSigmaX, proSigmaY, mainWindow_RT->getRadius(), motionMixture);
+	int radius_in = 3;
+	cond.init(0, best_lock.x, best_lock.y, 0, 0,idealr, idealg, idealb, new_state, proSigmaX, proSigmaY, radius_in, motionMixture);  //K_I just added the variable (fixed)
 	
 	CvPoint bestGuess_t_1;
 	bestGuess_t_1.x = clickx;
