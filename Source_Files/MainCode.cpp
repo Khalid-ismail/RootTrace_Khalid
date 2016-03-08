@@ -3659,7 +3659,6 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	double backBoneAngle = 0;
 	IplImage* ironImg= cvCreateImage(cvSize(40,1000),8,3);
 
-
 	// - asad
 
 	CvPoint oldp;
@@ -3672,7 +3671,9 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	//}
 
 	while (i<max_number_steps_to_trace && code!=32) {
-		if (i==max_number_steps_to_trace-1) MessageBox::Show( "Tracing size has exceeded maximum trace size.\nTerminating Trace for this root. ", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		if (i==max_number_steps_to_trace-1)
+			//MessageBox::Show( "Tracing size has exceeded maximum trace size.\nTerminating Trace for this root. ", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning); //K_I
+			{printf("Tracing size has exceeded maximum trace size.\nTerminating Trace for this root.");}
 		/*
 		if (i>20) {
 			//TEST

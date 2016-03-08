@@ -7,7 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <highgui.h>
-#include "/home/osboxes/mnt/RT3/RootTrace/RootTrace2/Condensation.h"
+#include "Condensation.h"
 
 using namespace std;
 //using namespace System::Windows::Forms; //No need for forms
