@@ -1606,7 +1606,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	doRootTracking( idealR, idealG, idealB, proSigmaX, proSigmaY, new_state, g, rootnum, filenumber/*,mainWindow_RT->getSlider_BGprior_value(), mainWindow_RT->getSlider_upperHyst(), mainWindow_RT->getSlider_lowerHyst(), mainWindow*/);    //K_I
 
 
-	doGraphTraversal(g, mainWindow);
+	doGraphTraversal(g/*, mainWindow*/); //K_I
 		
 
 
@@ -4099,8 +4099,8 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 			*/
 
 			
-     		//double prior_bg = 0.5;//0.999;
-			double prior_fg = 1-prior_bg;//0.1;
+     		double prior_bg = slider_BGpriorvalue;//0.999;
+			double prior_fg = 1-slider_BGpriorvalue; //double prior_fg = 1-prior_bg;//0.1; //K_I
 
 			//double threshold=1.1;
 			
@@ -4118,14 +4118,14 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 			double hiHystThreshold = upperHyst;//0.97;//0.65 for dataset A, 0.8, 0.9
 			double loHystThreshold = lowerHyst;//0.4; // 0.1 for dataset A, 0.05, 0.4
 
-			
 
 			if (bg_prob<0.0000000001 && fg_prob<0.0000000001) {
 				// handle divide by zero, shouldn't really occur but does at the moment...
 				// low prob of both FG and BG so set FG prob to be between hyst levels
 				
 				
-				if (!mainWindow_RT->getDefaultToRootState()) {
+				//if (!mainWindow_RT->getDefaultToRootState()) { //K_I
+				if (!cb_defaultToRoot) {
 					// if no data, assume we are between thresholds
 					posterior_fg_model = (hiHystThreshold + loHystThreshold)/2;
 					posterior_bg_model = 1- posterior_fg_model;
@@ -4139,8 +4139,6 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 				}
 
 				
-				
-
 				if (annotateImage) cvLine(output, cvPoint(p.x-15, p.y), cvPoint(p.x-5, p.y), cvScalar(0, 255, 255), 1);//mark zeros
 
 			}
@@ -4157,7 +4155,6 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 			}
 			
 			
-
 			if (posterior_fg_model>hiHystThreshold) {
 				hiCounter=hiCounterStart;     // Hi Hysteresis thresh //rulematched = true;// rulematchedcounter--;
 				if (annotateImage) cvLine(output, cvPoint(p.x+14, p.y), cvPoint(p.x+20, p.y), cvScalar(0, 255, 0), 1);//high thresh
@@ -4975,7 +4972,7 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 }
 
 
-void CMainCode::doGraphTraversal(CvGraph* g, System::Windows::Forms::Form^ mainWindow) {
+void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mainWindow*/) {   //K_I
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<< DIJKSTRA GRAPH TRAVERSAL (shortest distance) >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// ... after pruning low prob nodes from graph
 

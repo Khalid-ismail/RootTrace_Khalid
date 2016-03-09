@@ -17,7 +17,11 @@ using namespace std;
 
 const int max_roots = 70;
 
+static double slider_BGpriorvalue = 0.99;
+static double upperHyst = 0.97;
+static double lowerHyst = 0.009;
 
+bool cb_defaultToRoot = false;
 
 struct MyVertex : CvGraphVtx
 {
@@ -118,7 +122,7 @@ private:
 	double calib_dist;
 	void doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double proSigmaX, double proSigmaY, UCHAR new_state, CvGraph* g, int rootnum, int filenum/*,  double prior_bg,  double upperHyst, double lowerHyst, System::Windows::Forms::Form^ mainWindow*/);   //K_I
 	int rootIndex;
-	void doGraphTraversal(CvGraph* g, System::Windows::Forms::Form^ mainWindow);
+	void doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mainWindow*/); //K_I
 	//double cum_sq_devs, st_dev;
 	vector<MyPath> paths;
 	//void mainWindowText(System::Windows::Forms::Form^ mainWindow, System::String ^string); //K_I
