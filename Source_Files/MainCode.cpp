@@ -29,6 +29,7 @@ OF SUCH DAMAGE.
 #include "highgui.h"
 #include "../Header_Files/MainCode.h"
 #include <iostream>
+#include <array>
 #include "../Header_Files/Condensation.h"
 #include "../Header_Files/StatsWriter.h"
 //#include "3dgraph.h"
@@ -1058,12 +1059,19 @@ int _vscprintf (const char * format, va_list pargs) {
 
 float max_float (float x, float y)
 {
-	if (x <= y)
+	if (x >= y)
 		{return x;}
 	return y;
 }
 
 int max_int (int x, int y)
+{
+	if (x >= y)
+		{return x;}
+	return y;
+}
+
+double min_double (double x, double y)
 {
 	if (x <= y)
 		{return x;}
@@ -1300,7 +1308,9 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	//mainWindowGlobal = mainWindow; //K_I
 
-
+	float curvatures[max_files][max_length][max_roots];
+	float curvatures2[max_files][max_length][max_roots];
+	float lengthForCurvature[max_files][max_length][max_roots];
 
 
 /*	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
@@ -1609,7 +1619,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	doGraphTraversal(g/*, mainWindow*/); //K_I
 		
 
-
 	int best_indx=0;// Dijkstra only gives us one path
 	int new_path_size = paths[best_indx].path.size();
 	//int new_path_size2 = paths[best_indx].dist;
@@ -1618,7 +1627,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	CvPoint rootEnd = cvPoint(0,0);
 	CvPoint furthestFromLine = cvPoint(0,0);
 	double length_to_maxAreaPoint = -1;
-	if (g==NULL) MessageBox::Show("g==null");
+	if (g==NULL) printf("g==null"); //MessageBox::Show("g==null"); //K_I
 	//paths[0].path[0];//ok
 	//((MyVertex*) cvGetGraphVtx(g, paths[0].path[0])); //breaks
 	rootStart.x = ((MyVertex*) cvGetGraphVtx(g, paths[0].path[0]))->x;   /// ERROR HERE!!!
@@ -1641,11 +1650,11 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		MyVertex * myv1 = (MyVertex*) cvGetGraphVtx(g, paths[best_indx].path[vtxn]);
 		//MyVertex * myv2 = (MyVertex*) cvGetGraphVtx(g, paths[best_index].path[vtxn+1]);
 
-		if (debug)cout << "Node log10 prob: "<< log10(min(myv1->prob_non_normalized,1))<<endl;
+		if (debug) cout << "Node log10 prob: "<< log10(min_double(myv1->prob_non_normalized,1.0))<<endl;
 
 		if (vtxn>15) {
 			// start building model of probs
-			prob_running_total += log10(min(myv1->prob_non_normalized, 1)); // 1 is max prob
+			prob_running_total += log10(min_double(myv1->prob_non_normalized, 1.0)); // 1 is max prob
 			prob_stat_count++;
 			prob_mean = prob_running_total/prob_stat_count;
 			if (debug) cout << "  mean prob: "<< prob_mean<<endl;
@@ -1685,9 +1694,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	} //end vtxn loop
 
-
-
-
 	// get max and min probs found
 	double max_prob = 0;
 	double min_prob = 2;
@@ -1716,8 +1722,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	cout<<endl<<"Chosen path "<<best_index<<endl;
 	cout<<"Prob = "<<paths[best_index].prob<<", dist = "<< paths[best_index].dist<<endl;
 	cout<<"Path length = "<<paths[best_index].path.size()<<endl;
-
-	
 	
 	cvCopy(originali, image);
 
@@ -1791,8 +1795,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 			//for (int init=0; init<d; init++) 
 			//	sig[init] = 0;
-
-			
 
 			// 11111111111111111111111111111111
 			// Curvature and gravitropic point
@@ -4938,9 +4940,7 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	    }
 	    outfile.close();
     	
-    	
-	
-	
+
 	//DRAGON
    for(int i=0; i<subRootCountLeft; i++)
         cvLine( output, subRootsLeft[i], cvPoint( subRootsLeft[i].x-10,  subRootsLeft[i].y),  CV_RGB(255,0,0),2);
@@ -4971,7 +4971,6 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	cvWaitKey(1);
 }
 
-
 void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mainWindow*/) {   //K_I
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<< DIJKSTRA GRAPH TRAVERSAL (shortest distance) >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// ... after pruning low prob nodes from graph
@@ -4981,18 +4980,24 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 	
 	// set all vertices to have shortest dist = inifinity...
 	int vertex_count = cvGraphGetVtxCount(g);
-	if (vertex_count==0) MessageBox::Show( "cvGraphGetVtxCount(g) == 0 ", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	if (vertex_count==0)
+		//MessageBox::Show( "cvGraphGetVtxCount(g) == 0 ", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error); //K_I
+		{printf("Error");}
 	vector<int> S, Q;		// S = all vertices (indexes) for which a min dist has been found
 							// Q = all vertices (indexes) not in S
 
 	MyVertex* end = NULL;
 
-	System::GC::Collect();//force collection of existing arrays? Trying to find cause of memory errors...
-	array<double>^ cum_prob = gcnew array< double >(max_number_steps_to_trace); // to store stats at each graph 'level'
-	array<double>^ mean_prob= gcnew array< double >(max_number_steps_to_trace); 
+	//System::GC::Collect();//force collection of existing arrays? Trying to find cause of memory errors...   //K_I
+	//array<double>^ cum_prob = gcnew array< double >(max_number_steps_to_trace); // to store stats at each graph 'level'
+/*	array<double>^ mean_prob= gcnew array< double >(max_number_steps_to_trace);
 	array<double>^ st_dev   = gcnew array< double >(max_number_steps_to_trace); 
-	array<double>^ cum_sq_devs = gcnew array< double >(max_number_steps_to_trace); 
+	array<double>^ cum_sq_devs = gcnew array< double >(max_number_steps_to_trace);*/ //K_I
 	
+	double cum_prob[max_number_steps_to_trace];
+	double mean_prob[max_number_steps_to_trace];
+	double st_dev[max_number_steps_to_trace];
+	double cum_sq_devs[max_number_steps_to_trace];
 	
 	//initialisation
 	// We calc stats for each level  of the graph/step along the root
@@ -5009,7 +5014,7 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 	int num_levels=0;
 	for (int vv = 0; vv<vertex_count; vv++) {
 		MyVertex* v = (MyVertex*)cvGetGraphVtx(g, vv);
-		if (v==NULL) MessageBox::Show("ERROR v==NULL");
+		if (v==NULL){printf("Error");} //MessageBox::Show("ERROR v==NULL"); //K_I
 		v->dij_dist = infinity;
 		v->dij_dist_metric = infinity;
 		v->dij_prob = -1;
@@ -5042,8 +5047,6 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 	}
 
 	
-	
-
 	// TO DO remove vertices with probs lower than x sd?????  Be careful to remove also from any lists already created...
 	// tried, can remove all nodes at time t and hence breaks...
 	// OR only update min distances if prob threshold criteria is also met?? - tried, unpredictable behaviour
@@ -5083,14 +5086,13 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 		}
 	}
 
-	
 
-	if (num_end_nodes_removed==NSAMPLES) MessageBox::Show("WARNING num_end_nodes_removed==NSAMPLES \n Mean = "+mean_prob[end_level]+", sd "+st_dev[end_level]);
-
+	if (num_end_nodes_removed==NSAMPLES){printf("WARNING num_end_nodes_removed==NSAMPLES");} //MessageBox::Show("WARNING num_end_nodes_removed==NSAMPLES \n Mean = "+mean_prob[end_level]+", sd "+st_dev[end_level]); //K_I
 
 	// find out how many end nodes we have
 	if (found_end_test==0) 
-		MessageBox::Show("WARNING No vertices with End flag!!");
+		{printf("WARNING No vertices with End flag!!");}
+		//MessageBox::Show("WARNING No vertices with End flag!!"); //K_I
 	//else
 		//mainWindowText(mainWindow, found_end_test+" end vertices found");
 
@@ -5159,9 +5161,10 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 		if (best_idx==-1) { 
 			if (Q.size()==1) {
 				MyVertex* vv_vtx = (MyVertex*)cvGetGraphVtx(g, Q[0]);//must be Q[0] as only 1
-				mainWindowText(mainWindow, 	"Q[0]->dij_dist = "+vv_vtx->dij_dist);
+				//mainWindowText(mainWindow, 	"Q[0]->dij_dist = "+vv_vtx->dij_dist); //K_I
 			}
-			MessageBox::Show("WARNING best_idx==-1. Q.size() = "+Q.size());
+			//MessageBox::Show("WARNING best_idx==-1. Q.size() = "+Q.size());
+			printf("WARNING best_idx==-1");
 
 		}
 
@@ -5175,7 +5178,7 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 		// edge set to be first edge leaving vertex u
 		if (u==NULL) {
 			//cout <<"WARNING u = NULL - going to break!!!"<<endl;
-			MessageBox::Show("WARNING u==NULL. Exiting...");
+			printf("WARNING u==NULL. Exiting.."); //MessageBox::Show("WARNING u==NULL. Exiting..."); //K_I
 			// THIS MUST MEAN WE'RE AT THE LAST NODE< SO COULD BREAK HERE? endfound=true;?
 			//exit(-10);
 			endfound=true;
@@ -5197,7 +5200,6 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 		//else
 		
 		edge = u->first;
-
 
 		// check dist to each vertex on an exiting edge from u
 		CvGraphEdge* tempedge = edge;
@@ -5264,13 +5266,12 @@ void CMainCode::doGraphTraversal(CvGraph* g/*, System::Windows::Forms::Form^ mai
 	//stopTimer();
 
 
-
-	if (nullexit) MessageBox::Show("WARNING Exited loop with u==NULL");
+	if (nullexit) printf("WARNING Exited loop with u==NULL"); // MessageBox::Show("WARNING Exited loop with u==NULL"); //K_I
 
 	//cout <<"Exited Q loop"<<endl;
 
 	MyPath path;
-	if (end==NULL) MessageBox::Show("WARNING no end node pointer set.");
+	if (end==NULL) printf("WARNING no end node pointer set."); // MessageBox::Show("WARNING no end node pointer set."); //K_I
 	MyVertex * vtx = end;
 	path.path.clear();
 	int vcount=0;
@@ -5991,7 +5992,7 @@ CMainCode::CMainCode()
 
 /*__int64*/ int CMainCode::findBarcodeInImage(void) //K_I
 {
-	MessageBox::Show("Find barcode disabled for now.");
+	printf("Find barcode disabled for now."); //MessageBox::Show("Find barcode disabled for now."); //K_I
 	
 	//NEED TO UNCOMMENT barcode.h
 	//__int64 barcode = CBarcode::findBarcodeInImage(image);
