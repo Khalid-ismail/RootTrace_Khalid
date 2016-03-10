@@ -8,13 +8,13 @@
 
 namespace RootTrace2 {
 	
-	using namespace System;
+/*	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace System::Runtime::InteropServices;
+	using namespace System::Runtime::InteropServices; */ //K_I
 
 	const double processX = 1.0;//0.9
 	const double processY = 1.0;//0.9

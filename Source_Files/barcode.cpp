@@ -1,4 +1,4 @@
-#include "stdafx.h"
+/*#include "stdafx.h"
 #include "barcode.h"
 
 #define STR(s) #s
@@ -54,4 +54,4 @@ __int64 CBarcode::findBarcodeInImage (IplImage* m_image)
 	cvReleaseImage(&grey);
 
     return barcodeNumber;
-}
+}*/

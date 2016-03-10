@@ -38,7 +38,7 @@ OF SUCH DAMAGE.
 //#include "nr.h"
 //#include "nagmk21.hxx"
 #include "../Header_Files/ZTable.h"
-#include <tchar.h>
+//#include <tchar.h> //K_I
 //#include <Windows.h>
 //#include "barcode.h" //need to add back in barcode.h and barcode.cpp to project
 
