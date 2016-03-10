@@ -2,7 +2,7 @@
 #include "highgui.h"
 
 #include "../Header_Files/About.h"
-#include "/home/osboxes/mnt/RT3/RootTrace/RootTrace2/MainCode.h"
+#include "MainCode.h"
 
 
 

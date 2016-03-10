@@ -1312,6 +1312,8 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	float curvatures2[max_files][max_length][max_roots];
 	float lengthForCurvature[max_files][max_length][max_roots];
 
+	float finalLengths[max_files][max_numroots];
+
 
 /*	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
 	//array<float,3>^ curvatures2 = gcnew array<float,3>(max_files, max_length, max_roots); //store using new method
@@ -2742,8 +2744,6 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	}
 
 
-	
-
 	int tip_scale = 2;
 	int tipx = (rootEnd.x - initialTipLocations[rootnum].x)*tip_scale;
 	int tipy = (rootEnd.y - initialTipLocations[rootnum].y)*tip_scale;
@@ -2829,9 +2829,9 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	
 	filenumber++;
 
-	if ((image!=NULL)&&(filenumber<filenames->Length-1)) cvReleaseImage(&image);//release every time except last time through (released at very end)
+	if ((image!=NULL)&&(filenumber < 1/*filenames->Length-1*/)) cvReleaseImage(&image);//release every time except last time through (released at very end) //K_I only one file now
 	if (originali!=NULL) cvReleaseImage(&originali);
-	if ((output!=NULL)&&(filenumber<filenames->Length-1)) cvReleaseImage(&output); //release every time except last time through (released at very end)
+	if ((output!=NULL)&&(filenumber < 1/*filenames->Length-1*/)) cvReleaseImage(&output); //release every time except last time through (released at very end)  //K_I only one file now
 	if (smoothedi!=NULL)	cvReleaseImage(&smoothedi);
 	if (crop!=NULL)			cvReleaseImage(&crop);
 	if (previousi!=NULL)	cvReleaseImage(&previousi);
@@ -2848,7 +2848,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	
 	int fileNumberOfGravOnset[max_numroots];//file number for each root when bending distance reach
 
-	if (doGravitropic) {
+	/*if (doGravitropic) {     //K_I deactivating doGravitropic
 		// For each root, lets see what file number bend onset happened on
 		// We do this by looking to see which file num the recorded length of the root reaches the grav length.
 		// can convert this to time by multiplying file number by capture period
@@ -2929,7 +2929,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		/*for (int i=0; i<numBins; i++) {
 			mainWindowText(mainWindow, "Bin["+i+"] = "+histogramBins[i]);
 		}*/
-
+/*
 		int border = 30;
 
 		double binScale = 50;
@@ -2954,11 +2954,11 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		cvSaveImage(gravhistfilestring, gravHist);
 		//cvWaitKey(0);
 
-	} //if (doGravitropic)
+	} *///if (doGravitropic) //K_I deactivate doGravitropic
 	
 
 
-	if (filenumber>1){//Do not do if only one image
+	/*if (filenumber>1){//Do not do if only one image  //K_I deactivate more than a file
 	// show curvature test
 	const double yscale = 2;  //curvature chart y scale
 	const int xscale = 4;
@@ -2976,7 +2976,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	
 	if (filenumber>1) {//don't do for just one file
-	for (int numfiles=0; numfiles<filenumber/*-1*/;numfiles++) {
+	for (int numfiles=0; numfiles<filenumber/*-1*//*;numfiles++) {
 		int segment =0;
 		double oldy=0;
 		
@@ -3042,7 +3042,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 			
 
-			sprintf(curvstring, "%i, %.1f, %.1f", numfiles, lengthForCurvature[numfiles, segment, rootnum], curvatures[numfiles, segment, rootnum]/*, curvatures2[numfiles, segment, rootnum]*/);
+			sprintf(curvstring, "%i, %.1f, %.1f", numfiles, lengthForCurvature[numfiles, segment, rootnum], curvatures[numfiles, segment, rootnum]/*, curvatures2[numfiles, segment, rootnum]*//*);  //K_I continue commenting
 			curvstats.AppendDataRow(curvstring);
 			
 			
@@ -3117,7 +3117,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	}// root num
 
 
-	}// loop through all roots in image
+	}// loop through all roots in image */ //K_I deactivate more that a file
 
 	//doManualAngles();
 
@@ -3126,11 +3126,12 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	
 	// EXIT
 	
-	mainWindow_RT->grey();
+	//mainWindow_RT->grey();  //K_I
 	if (bg_mask!=NULL) cvReleaseImage(&bg_mask);
 	if (preview_lengthsi!=NULL) cvReleaseImage(&preview_lengthsi);
 	
-	MessageBox::Show("Finished.", "RootTrace",MessageBoxButtons::OK,MessageBoxIcon::Information);
+	//MessageBox::Show("Finished.", "RootTrace",MessageBoxButtons::OK,MessageBoxIcon::Information);
+	printf("Finished.");
 
 	cvWaitKey(0);
 	if (numberOfManualAngleMeasures>0){
