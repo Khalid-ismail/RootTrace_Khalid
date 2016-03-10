@@ -2353,15 +2353,13 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 		}
 		
-
-
 		old_px = p1.x;
 		old_py = p1.y;
 
 		if (draw_root_trace && vtxn<new_path_size-1) cvLine(output, p1, p2, col, 2);  //drawing the actual root trace, unless we're at final segment (in which case there is no point to draw to)
 		//if (gravOnsetLength[rootnum]>0 && myv1->dij_dist>gravOnsetLength[rootnum]) cvCircle(output, p1, 3, cvScalar(0, 255, 255), 1);
 		
-		if (filenumber==filenames->Length-1) {//last image, so plot final traces
+		if (filenumber== 0/*filenames->Length-1*/) {//last image, so plot final traces  //K_I only one file now
 			char tracestring[255];
 			sprintf(tracestring, "%i, %.1f, %.1f", rootnum, myv1->x, myv1->y);
 			trace_points.AppendDataRow(tracestring);
@@ -2596,7 +2594,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 	CvSeq* pointsToFit = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), pointsToFitStorage );
 	
 	for (int pointi=1; pointi<=tipPointsNumToFit; pointi++){
-		if (new_path_size<tipPointsNumToFit+1) MessageBox::Show("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi);
+		if (new_path_size<tipPointsNumToFit+1) printf("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi); // MessageBox::Show("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi); //K_I
 		cvSeqPush(pointsToFit, &cvPoint2D32f(((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->x, 
 			((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->y));
 		MyPutPixel(output, ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->x, output->height-((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->y, 255, 0, 0);//mark red points used to fit line
