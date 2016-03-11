@@ -163,7 +163,7 @@ void on_mouse_wrapper( int event, int x, int y, int flags, void* param )
 
 }
 
-void CMainCode::saveStartPoints(String^ filename) {
+/*void CMainCode::saveStartPoints(String^ filename) {
 	   savedStartPoints=true;   
 	   XmlWriterSettings ^ settings = gcnew XmlWriterSettings();
 	   settings->Indent = true;
@@ -201,14 +201,13 @@ void CMainCode::saveStartPoints(String^ filename) {
 	   writer->WriteElementString("mm_per_pix", ""+(int)(calib_mmPerPix*100000));//save as int, then convert back to double later
 	   writer->WriteElementString("min_per_image", ""+(int)(calib_minPerImage*100000));
 	   writer->WriteEndElement();
-
 	  
 	   writer->WriteEndElement(); //Data
 
 	   writer->Flush();
-}
+}*/ //K_I saving start points has been disabled
 
-void CMainCode::saveFileList(array<System::String^>^ filenames) {
+/*void CMainCode::saveFileList(array<System::String^>^ filenames) {
 	   XmlWriterSettings ^ settings = gcnew XmlWriterSettings();
 	   settings->Indent = true;
 	   settings->IndentChars = ("    ");
@@ -239,10 +238,10 @@ void CMainCode::saveFileList(array<System::String^>^ filenames) {
 	   writer->WriteEndElement();
 
 	   writer->Flush();
-}
+}*/ //K_I deactivating save file list
 
 
-array<System::String^>^ CMainCode::loadFileLists() {
+/*array<System::String^>^ CMainCode::loadFileLists() {
 
 	array<System::String^>^ filenames;
 
@@ -260,7 +259,7 @@ array<System::String^>^ CMainCode::loadFileLists() {
 	  while (reader->Read()) {
 		   //reader->ReadStartElement("root"+ num_roots);
 		   //MessageBox::Show(reader->Value);
-		   /*reader->Read();
+		   reader->Read();
 		   MessageBox::Show(reader->Value);
 		   start_ps[num_roots].x = Convert::ToInt32(reader->Value);//Convert::ToInt32(reader->ReadElementString("startx"));
 		   
@@ -268,7 +267,7 @@ array<System::String^>^ CMainCode::loadFileLists() {
 		   reader->Read();
 		   start_ps[num_roots].y = Convert::ToInt32(reader->Value);//Convert::ToInt32(reader->ReadElementString("starty"));
 		   reader->ReadEndElement();
-		   num_roots++;*/
+		   num_roots++;
 		 
 		   switch (reader->NodeType) {
 			  case XmlNodeType::Element:
@@ -306,20 +305,19 @@ array<System::String^>^ CMainCode::loadFileLists() {
 
 
 
-}
+}*/ //K_I deactivating load file lists
 
 /*System::Windows::Forms::Form^ CMainCode::getMainWindow() {
-
 
  return mainWindowGlobal;
 }*/ //K_I
 
-void CMainCode::loadStartPoints(String^ filename) {
+/*void CMainCode::loadStartPoints(String^ filename) {
 	   
 
 	  // System::String^ folder = %System::String(workingFolder);	
 	   //MessageBox::Show(""+folder + "\\" +filename + " reading...");
-	   XmlReader^ reader = XmlReader::Create(/*folder + "\\" +*/filename);
+	   XmlReader^ reader = XmlReader::Create(folder + "\\" +filename);
 	   reader->ReadStartElement("Data");
 	   //reader->ReadStartElement("RootStartPoints");
 	   
@@ -337,7 +335,7 @@ void CMainCode::loadStartPoints(String^ filename) {
 	   while (reader->Read()) {
 		   //reader->ReadStartElement("root"+ num_roots);
 		   //MessageBox::Show(reader->Value);
-		   /*reader->Read();
+		   reader->Read();
 		   MessageBox::Show(reader->Value);
 		   start_ps[num_roots].x = Convert::ToInt32(reader->Value);//Convert::ToInt32(reader->ReadElementString("startx"));
 		   
@@ -345,7 +343,7 @@ void CMainCode::loadStartPoints(String^ filename) {
 		   reader->Read();
 		   start_ps[num_roots].y = Convert::ToInt32(reader->Value);//Convert::ToInt32(reader->ReadElementString("starty"));
 		   reader->ReadEndElement();
-		   num_roots++;*/
+		   num_roots++;
 		   switch (reader->NodeType) {
 			  case XmlNodeType::Element:
 				  //Console.Write("<{0}>", reader.Name);
@@ -373,10 +371,10 @@ void CMainCode::loadStartPoints(String^ filename) {
 					  
 					  int data = Convert::ToInt32(reader->Value);
 					  cropDataItemsRead++;
-					  /*  writer->WriteElementString("cropx", ""+croprect.x);
+					    writer->WriteElementString("cropx", ""+croprect.x);
 						  writer->WriteElementString("cropy", ""+croprect.y);
 						  writer->WriteElementString("croph", ""+croprect.height);
-						  writer->WriteElementString("cropw", ""+croprect.width);*/
+						  writer->WriteElementString("cropw", ""+croprect.width);
 					  if (cropDataItemsRead==1) croprect.x = data;
 					  else if (cropDataItemsRead==2) croprect.y = data;
 					  else if (cropDataItemsRead==3) croprect.height = data;
@@ -457,7 +455,7 @@ void CMainCode::loadStartPoints(String^ filename) {
 		cvShowImage("Image", image_copy);
 		//cvWaitKey();
 		cvReleaseImage(&image_copy);
-	}
+	}*/  //K_I load start point disabled
 
 
 bool CMainCode::getBGStats(IplImage* bg_mask, IplImage* image) {
@@ -1102,7 +1100,7 @@ void CMainCode::imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colou
 	delete message;
 }
 
-void CMainCode::enhance(Form^ mainWindow, IplImage* i){
+/*void CMainCode::enhance(Form^ mainWindow, IplImage* i){
 			IplImage* grey = cvCreateImage(cvGetSize(i), 8, 1);
 			cvCvtColor(i, grey, CV_RGB2GRAY);
 
@@ -1116,9 +1114,9 @@ void CMainCode::enhance(Form^ mainWindow, IplImage* i){
 			cvReleaseImage(&grey);
 			mainWindowText(mainWindow, "Enhanced.");
 
-}
+}*/ //K_I
 
-void CMainCode::smooth(Form^ mainWindow, IplImage* i){
+/*void CMainCode::smooth(Form^ mainWindow, IplImage* i){
 			cvSmooth(i, i, CV_MEDIAN, 3, 0, 0); //was 5
 			cvSmooth(i, i, CV_GAUSSIAN, 7, 7, 0); //was 5
 			//cvSmooth(measuresi, measuresi, CV_GAUSSIAN, 7, 7, 0); //was 5
@@ -1126,7 +1124,7 @@ void CMainCode::smooth(Form^ mainWindow, IplImage* i){
 			//cvCopy(originali, output);
 			cvShowImage("Image", i);
 			mainWindowText(mainWindow, "Filtered / smoothed.");
-}
+}*/ //K_I
 
 /*void CMainCode::mainWindowText(Form^ mainWindow, String^ string) {
 	((RootTrace2::Form1^)mainWindow)->textBox1->Text::set(((RootTrace2::Form1^)mainWindow)->textBox1->Text::get()+"\r\n"+string);
@@ -1220,7 +1218,7 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 	 return limage;
 }
 
-void CMainCode::setBGMask(System::String^ filename) {
+/*void CMainCode::setBGMask(System::String^ filename) {
 
 	char loadBG[255];
 	char* st = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename);
@@ -1236,14 +1234,14 @@ void CMainCode::setBGMask(System::String^ filename) {
 	cvWaitKey(1);
 	cvReleaseImage(&i_copy);
 
-}
+}*/  //K_I deactivating set BG mask
 
-void CMainCode::saveBGMask(System::String^ filename) {
+/*void CMainCode::saveBGMask(System::String^ filename) {
 
 	char* filenameCH = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename);
 	cvSaveImage(filenameCH, bg_mask);
 
-}
+}*/ //K_I deactivating save BG mask
 
 void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
 	
@@ -5539,7 +5537,7 @@ IplImage* CMainCode::getMeasuresi(void)
 	return measuresi;
 }
 
-void CMainCode::setupCalib(System::String^ s, System::String^ s2, System::Windows::Forms::Form^ mainWindow) {
+/*void CMainCode::setupCalib(System::String^ s, System::String^ s2, System::Windows::Forms::Form^ mainWindow) {
 	//there are 2 calibration methods... this is the second one
 	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);
 	//double mm = System::Convert::ToDouble(s);
@@ -5557,7 +5555,7 @@ void CMainCode::setupCalib(System::String^ s, System::String^ s2, System::Window
 	label = %System::String(c2);
 	mainWindow_RT->setCalibLabel2(label);
 
-}
+}*/ //K_I deactivating setup Calib
 
 void CMainCode::cropImages(CvRect rect) { 
 	/*originali = cvCloneImage(image);
@@ -5686,15 +5684,17 @@ void CMainCode::toggleGoButtonPressed(void)
 	goButtonPressed = !goButtonPressed;
 }
 
-void CMainCode::setOutputFolderString(String^ folder)
+/*void CMainCode::setOutputFolderString(String^ folder)
 {
 	sprintf(outputFolderString, "%s", (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(folder));
-}
+}*/ //K_I
 
+/*
 void CMainCode::setWorkingFolder(String^ folder)
 {
 	sprintf(workingFolder, "%s", (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(folder));
 }
+*/ //K_I
 
 /*void CMainCode::startTimer(void)
 {

@@ -89,17 +89,17 @@ class CMainCode {
 	void MyPutPixel(IplImage *m_image, int x, int y, UCHAR b, UCHAR g, UCHAR r);
 	void MyGetPixel(IplImage *m_image, int x, int y, UCHAR *b, UCHAR *g, UCHAR *r); 
 	CvPoint drawSample(IplImage* copy, int t, UCHAR r, UCHAR g, UCHAR b, bool drawsamples, int iters, int x_offset=20, int y_offset=20);
-	void enhance(System::Windows::Forms::Form^ mainWindow, IplImage* i);
-	void smooth(System::Windows::Forms::Form^ mainWindow, IplImage* i);
-	void saveStartPoints(System::String^ filename);
-	void loadStartPoints(System::String^ filename);
+	//void enhance(System::Windows::Forms::Form^ mainWindow, IplImage* i); //K_I
+	//void smooth(System::Windows::Forms::Form^ mainWindow, IplImage* i); //K_I
+	//void saveStartPoints(System::String^ filename); //K_I Saving start points disabled
+	//void loadStartPoints(System::String^ filename); //K_I Load start points disabled
 	IplImage* getMeasuresi(void);
-	void setBGMask(System::String^ filename);
+	//void setBGMask(System::String^ filename); //K_I deactivating set BG Mask
 
-	void saveFileList(array<System::String^>^ filenames);
-	array<System::String^>^ loadFileLists();
-	void saveBGMask(System::String^ filename); 
-	void setupCalib(System::String^ s, System::String^ s2, System::Windows::Forms::Form^ mainWindow);
+	//void saveFileList(array<System::String^>^ filenames); //K_I deactivating save file list
+	//array<System::String^>^ loadFileLists(); //K_I deactivating load file lists
+	//void saveBGMask(System::String^ filename);  //K_I deactivating save BG mask
+	//void setupCalib(System::String^ s, System::String^ s2, System::Windows::Forms::Form^ mainWindow); //K_I deactivating setup Calib
 	int getAngleQuardrant(int x1,int y1, int x2, int y2);
 
 
@@ -109,7 +109,7 @@ class CMainCode {
 private:
 	bool savedStartPoints;
 	bool invert;
-	gcroot<array<System::String^>^> m_filenames;
+	// gcroot<array<System::String^>^> m_filenames; //K_I
 	//bool dragon; //debug variable
 	bool enableEnhancing;
 	bool evolveTipPoints;
@@ -139,8 +139,8 @@ private:
 	bool getBGStats(IplImage* bg_mask, IplImage* image);
 	//CStatsWriter prob_stats;
 	double last_frame_euc_dist[max_roots];
-	System::Windows::Forms::Form^ getMainWindow();
-	gcroot<System::Windows::Forms::Form^> mainWindowGlobal;
+	//System::Windows::Forms::Form^ getMainWindow(); //K_I
+	//gcroot<System::Windows::Forms::Form^> mainWindowGlobal; //K_I
 	CvPoint bg_rect_click;
 	bool removeBGflag; 
 
@@ -190,8 +190,8 @@ protected:
 public:
 	void prepareCrop(void);
 	void toggleGoButtonPressed(void);
-	void setOutputFolderString(System::String^ folder);
-	void setWorkingFolder(System::String^ folder);
+	//void setOutputFolderString(System::String^ folder); //K_I
+	//void setWorkingFolder(System::String^ folder); //K_I
 private:
 	//void startTimer(void); //K_I
 	//void stopTimer(void); //K_I

@@ -35,7 +35,8 @@ namespace RootTrace2 {
 	///          the designers will not be able to interact properly with localized
 	///          resources associated with this form.
 	/// </summary>
-	public ref class Form1 : public System::Windows::Forms::Form
+
+/*	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
 		Form1(void)
@@ -1750,7 +1751,7 @@ private: System::Windows::Forms::TabControl^  tabControl;
 		}
 #pragma endregion
 	static CMainCode* mainprog = new CMainCode;
-/*
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 System::Windows::Forms::DialogResult result = this->openFileDialog1->ShowDialog();
 				 if (result==System::Windows::Forms::DialogResult::OK) {
@@ -1827,7 +1828,7 @@ private: System::Windows::Forms::TabControl^  tabControl;
 			 }
 			 
 			 }
-*/ //K_I
+ //K_I
 
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 			 }
@@ -1971,9 +1972,9 @@ public: void updateMeasureWindow(IplImage* measurei) {
 			// but I'm a bad person
 
 			// This cod eis for MFC?? Whats the .NET equivalent
-			/*HBITMAP hBitmap=CreateBitmap(measuresi->width,measuresi->height,
+			HBITMAP hBitmap=CreateBitmap(measuresi->width,measuresi->height,
                           measuresi->nChannels*8,1, NULL);
-			SetBitmapBits(hBitmap,measuresi->imageSize,measuresi->imageData);*/
+			SetBitmapBits(hBitmap,measuresi->imageSize,measuresi->imageData);
 
 			//Breaks and is terrible anyway, so just save.
 			//previewMeasureImage->Image::set(Image::FromFile("c:\\measuresi.jpg"));
@@ -1982,7 +1983,7 @@ public: void updateMeasureWindow(IplImage* measurei) {
 			
 
 
-			/*System::Drawing::Bitmap ^ bmp = gcnew System::Drawing::Bitmap(;
+			System::Drawing::Bitmap ^ bmp = gcnew System::Drawing::Bitmap(;
            
             // Lock bits and obtain a pointer to the data
             System::Drawing::Imaging::BitmapData ^ bt = bmp->LockBits(System::Drawing::Rectangle(0, 0, width, height),
@@ -2001,7 +2002,7 @@ public: void updateMeasureWindow(IplImage* measurei) {
                     image_data[(y * width * 3) + (x * 3) + 2] = *(imgPtr + 2);
                 }
             }
-            bmp->UnlockBits(bt); */
+            bmp->UnlockBits(bt);
 
 
 			if (measurei!=NULL) {
@@ -2109,7 +2110,7 @@ private: System::Void b_loadPrevious_Click(System::Object^  sender, System::Even
 			 b_saveComments->Enabled = true;
 			 rtext_comments->Enabled = true;
 
-			 mainprog->init(s, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*/, this);
+			 mainprog->init(s, idealr, idealg, idealb, tb_lr, processX, processY, this->motionMixture, this);
 			 
 			
 			
@@ -2143,11 +2144,11 @@ private: System::Void tb_lowerHyst_Scroll(System::Object^  sender, System::Event
 			 lowerHyst = (double)this->tb_lowerHyst->Value::get()/10000;
 			 this->lowerHystLabel->Text::set(""+lowerHyst);
 		 }
-/*public: void enableCalib() {
+public: void enableCalib() {
 			b_SetCalib->Enabled = true;
 			textBox2->Enabled = true;
 		private: System::Void scanForBarcodeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-				 }*/
+				 }
 private: System::Void motionModelTrackerBar_Scroll(System::Object^  sender, System::EventArgs^  e) {
 			 this->motionMixture = (double)this->motionModelTrackerBar->Value::get();
 			 this->label14->Text::set(motionMixture + " ");
@@ -2337,7 +2338,7 @@ private: System::Void checkBox1_CheckedChanged_1(System::Object^  sender, System
 			 //Invert
 			 mainprog->setInvert(this->cb_invert->Checked);
 		 }
-};
+};*/
 
 
 
