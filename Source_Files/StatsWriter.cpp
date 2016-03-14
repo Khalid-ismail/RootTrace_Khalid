@@ -3,8 +3,9 @@
 //////////////////////////////////////////////////////////////////////
 
 //#include "stdafx.h"
-#include "StatsWriter.h"
+
 #include <iostream>
+#include "StatsWriter.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

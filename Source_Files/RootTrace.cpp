@@ -1,9 +1,10 @@
 // RootTrace2.cpp : main project file.
 
 //#include "stdafx.h"
-#include "Form1.h"
+
 #include "RootTrace.h"
 #include "ReadFile.h"
+#include "Form1.h"
 
 using namespace RootTrace2;
 
