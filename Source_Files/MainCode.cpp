@@ -2596,11 +2596,21 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	CvSeq* pointsToFit = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), pointsToFitStorage );
 	
 	for (int pointi=1; pointi<=tipPointsNumToFit; pointi++){
-		if (new_path_size<tipPointsNumToFit+1) printf("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi); // MessageBox::Show("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi); //K_I
-		cvSeqPush(pointsToFit, &cvPoint2D32f(((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->x, 
-			((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->y));
+		if (new_path_size<tipPointsNumToFit+1) printf("rootnum: "); // MessageBox::Show("rootnum: "+rootnum+"\n"+"nps: "+new_path_size+"\n"+"pointi: "+pointi); //K_I
+
+
+		MyVertex* p = (MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]);
+		CvPoint2D32f point = cvPoint2D32f(p->x, p->y);
+
+		cvSeqPush(pointsToFit, &point);
+
 		MyPutPixel(output, ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->x, output->height-((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->y, 255, 0, 0);//mark red points used to fit line
 		if (pointi==1) MyPutPixel(output, ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->x, output->height-((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-pointi]))->y, 255, 0, 255);//mark pink point at end
+
+
+		delete p;
+		p = NULL;
+
 	}
 	
 	float line_params[4];//normalized vector x, y, some point on the line x, y
@@ -2669,9 +2679,17 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	pointsToFit = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), pointsToFitStorage );
 	//if (rootnum==8) MessageBox::Show("initialTipPathLocation[rootnum]: "+initialTipPathLocation[rootnum]+ "\n"+"nps: "+new_path_size);
 	for (int pointi=0; pointi<initialTipPathLocation[rootnum]-2; pointi+=2){//subsample by 2
-		cvSeqPush(pointsToFit, &cvPoint2D32f(((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->x, 
-			((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->y));
-		    MyPutPixel(output, ((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->x, output->height-((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->y, 0, 0, 0);//mark black points used to fit line
+
+		MyVertex* p = (MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]);
+		CvPoint2D32f point = cvPoint2D32f(p->x, p->y);
+
+		cvSeqPush(pointsToFit, &point);
+
+		MyPutPixel(output, ((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->x, output->height-((MyVertex*) cvGetGraphVtx(g, paths[0].path[pointi]))->y, 0, 0, 0);//mark black points used to fit line
+
+		delete p;
+		p = NULL;
+
 	}
 	//if (rootnum==8) MessageBox::Show("C");
 	line_params[4];//normalized vector x, y, some point on the line x, y
