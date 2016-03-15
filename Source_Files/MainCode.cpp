@@ -1044,13 +1044,15 @@ int _vscprintf (const char * format, va_list pargs) {
  char* CMainCode::myspf(char* strToFormat, ...)				// my version of sprintf =)
 {
 	va_list varArgLst;
-	char* resStr = new char[255];
 
+//TO DD
     va_start(varArgLst, strToFormat);
 	int len = _vscprintf( strToFormat, varArgLst ) // _vscprintf doesn't count
                                + 1; // terminating '\0'
+	char* resStr = new char[len];
 
-	vsprintf_s(resStr, len, strToFormat, varArgLst ); 
+	//vsprintf_s(resStr, len, strToFormat, varArgLst );
+	vsprintf(resStr, strToFormat, varArgLst );
 
 	return resStr;
 }
