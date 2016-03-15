@@ -1,5 +1,7 @@
 //#include "stdafx.h"
 #include "ZTable.h"
+#include <cmath>
+using namespace std;
 
 CZTable::CZTable(void)
 {

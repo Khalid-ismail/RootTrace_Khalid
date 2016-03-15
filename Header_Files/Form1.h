@@ -20,10 +20,13 @@ namespace RootTrace2 {
 	const double processY = 1.0;//0.9
 
 	// Do not change here. Use brightness scroll bar.
-	const int idealr = 255;
+	/*const int idealr = 255;
 	const int idealg = 255;
-	const int idealb = 255;
-	
+	const int idealb = 255;*/ //K_I
+
+	UCHAR idealr = 255;
+	UCHAR idealg = 255;
+	UCHAR idealb = 255;
 
 
 	/// <summary>

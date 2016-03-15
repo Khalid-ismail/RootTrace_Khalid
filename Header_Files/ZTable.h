@@ -1,7 +1,8 @@
 #pragma once
 #include "math.h"
 
-ref class CZTable
+//ref class CZTable //K_I
+class CZTable
 {
 public:
 	CZTable(void);

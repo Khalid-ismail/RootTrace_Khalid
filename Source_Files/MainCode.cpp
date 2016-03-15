@@ -1245,7 +1245,7 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 
 }*/ //K_I deactivating save BG mask
 
-void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
+void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
 	
 	//NULL all image pointers
 	image = originali = previousi = crop = tempimage = measuresi = measuresiTaboo = smoothedi = output = debuggraph = preview_lengthsi = i_copy = i_copy2 = last_image = base_image = NULL;
@@ -2341,16 +2341,16 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 		}
 		
 		if (insideBorder) {
-			curvatures[filenumber,vtxn, rootnum] = myv1->angle;
+			curvatures[filenumber][vtxn][ rootnum] = myv1->angle;
 			//curvatures2[filenumber,vtxn, rootnum] = myv1->curvature;
-			lengthForCurvature[filenumber, vtxn, rootnum] = myv1->dij_dist;
+			lengthForCurvature[filenumber][ vtxn][ rootnum] = myv1->dij_dist;
 		}
 		else 
 		{
 			// no curvature measurment possible
-			curvatures[filenumber,vtxn, rootnum] = 999;
+			curvatures[filenumber][vtxn][ rootnum] = 999;
 			//curvatures2[filenumber,vtxn, rootnum] = 999;
-			lengthForCurvature[filenumber, vtxn, rootnum] = myv1->dij_dist;
+			lengthForCurvature[filenumber][ vtxn][ rootnum] = myv1->dij_dist;
 			col = cvScalar(0,0,0); // no value so paint black
 
 		}
@@ -2759,7 +2759,7 @@ void CMainCode::init(char filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, U
 
 	// write length on image
 	if (writeLengthOnImage) imgTxt(output, myspf("D= %.1f",paths[best_index].dist ), cvPoint(p2.x+5, p2.y), CV_RGB(255,0,0) );
-	finalLengths[filenumber, rootnum] = paths[best_index].dist;// save lengths for future use
+	finalLengths[filenumber][rootnum] = (float)(paths[best_index].dist);// save lengths for future use
 
 	// Quick preview graph
 	MyPutPixel(preview_lengthsi,filenumber+1, paths[best_index].dist, 255, 255, 255);
@@ -5649,7 +5649,7 @@ CvPoint CMainCode::lockToRoot(int clickx, int clicky)
 	int max = 0;
 	int bestx = 0;
 	int measure = -1;
-	for (int searchx=max(clickx-xrange, 1); searchx<min(clickx+xrange, measuresi->width-1); searchx++) {
+	for (int searchx=std::max(clickx-xrange, 1); searchx<std::min(clickx+xrange, measuresi->width-1); searchx++) {
 		MyGetPixel(measuresi, searchx-1, measuresi->height-clicky, &r1, &g1, &b1);//simple filter
 		MyGetPixel(measuresi, searchx,   measuresi->height-clicky, &r2, &g2, &b2);
 		MyGetPixel(measuresi, searchx+1, measuresi->height-clicky, &r3, &g3, &b3);

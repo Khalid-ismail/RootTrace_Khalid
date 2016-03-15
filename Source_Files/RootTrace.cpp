@@ -31,7 +31,8 @@ int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
 
 	read_file(argv[1]);
 
-	m_main.init(filename, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*//*, this*/);
+	//m_main.init(filename, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*//*, this*/); //K_I
+	m_main.init(filename, idealr, idealg, idealb, tb_lr, processX, processY);
 
 	return 0;
 }
