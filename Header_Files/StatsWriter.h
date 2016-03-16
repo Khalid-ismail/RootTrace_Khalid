@@ -3,7 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <fstream>
-#include "../Header_Files/stdafx.h"
+//#include "../Header_Files/stdafx.h"
+#include <iostream>
 
 
 using namespace std;

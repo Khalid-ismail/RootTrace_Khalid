@@ -21,7 +21,7 @@ static double slider_BGpriorvalue = 0.99;
 static double upperHyst = 0.97;
 static double lowerHyst = 0.009;
 
-bool cb_defaultToRoot = false;
+const bool cb_defaultToRoot = false;
 
 struct MyVertex : CvGraphVtx
 {

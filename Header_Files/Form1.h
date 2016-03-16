@@ -1,3 +1,4 @@
+/*
 //#pragma once
 #include "highgui.h"
 
@@ -8,25 +9,25 @@
 
 namespace RootTrace2 {
 	
-/*	using namespace System;
+	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace System::Runtime::InteropServices; */ //K_I
+	using namespace System::Runtime::InteropServices;  //K_I
 
 	const double processX = 1.0;//0.9
 	const double processY = 1.0;//0.9
 
 	// Do not change here. Use brightness scroll bar.
-	/*const int idealr = 255;
+	const int idealr = 255;
 	const int idealg = 255;
-	const int idealb = 255;*/ //K_I
+	const int idealb = 255; //K_I
 
-	UCHAR idealr = 255;
-	UCHAR idealg = 255;
-	UCHAR idealb = 255;
+	const UCHAR idealr = 255;
+	const UCHAR idealg = 255;
+	const UCHAR idealb = 255;
 
 
 	/// <summary>
@@ -39,7 +40,7 @@ namespace RootTrace2 {
 	///          resources associated with this form.
 	/// </summary>
 
-/*	public ref class Form1 : public System::Windows::Forms::Form
+	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
 		Form1(void)
@@ -2341,7 +2342,7 @@ private: System::Void checkBox1_CheckedChanged_1(System::Object^  sender, System
 			 //Invert
 			 mainprog->setInvert(this->cb_invert->Checked);
 		 }
-};*/
+};
 
 
 
@@ -2352,3 +2353,4 @@ private: System::Void checkBox1_CheckedChanged_1(System::Object^  sender, System
 
 }
 
+*/

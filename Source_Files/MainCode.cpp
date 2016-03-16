@@ -29,6 +29,7 @@ OF SUCH DAMAGE.
 #include "highgui.h"
 #include "../Header_Files/MainCode.h"
 #include <iostream>
+#include <fstream>
 #include <array>
 #include "../Header_Files/Condensation.h"
 #include "../Header_Files/StatsWriter.h"
@@ -1355,9 +1356,9 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	debugstats.ChangeFile("debug.csv");
 
 	//grav stats
-	CStatsWriter gravstats = CStatsWriter();
+	CStatsWriter *gravstats = new CStatsWriter();
 	char gravsavepath[512];
-	CStatsWriter gravdiststats = CStatsWriter();
+	CStatsWriter *gravdiststats = new CStatsWriter();
 
 	
 	char gravdiststring[255];
@@ -1596,17 +1597,17 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 		sprintf(gravsavepath,    "%s\\%s", outputFolderString, "grav.csv");
 		//String^ test = gcnew String(gravsavepath);
 		//MessageBox::Show(test);
-		gravstats.ChangeFile(gravsavepath);
-		gravstats.WriteTitles("File, Num. grav roots");
+		gravstats->ChangeFile(gravsavepath);
+		gravstats->WriteTitles("File, Num. grav roots");
 
 		//grav distances.  Stores for each frame and root the estimated dij distance of grav point, and size and confidence
 		char gravdistsavepath[512];
 		sprintf(gravdistsavepath,    "%s\\%s", outputFolderString, "grav_dist.csv");	
-		gravdiststats.ChangeFile(gravdistsavepath);
-		gravdiststats.AppendDataRow_NoReturn("File, Root, Grav dist., Grav. onset dist, Angle, Confidence, ");
+		gravdiststats->ChangeFile(gravdistsavepath);
+		gravdiststats->AppendDataRow_NoReturn("File, Root, Grav dist., Grav. onset dist, Angle, Confidence, ");
 		for (int j=0; j<num_roots; j++) 
-			gravdiststats.AppendDataRow_NoReturn("Root, Grav dist., Grav. onset dist, Angle, Confidence, ");
-		gravdiststats.CarriageReturn();
+			gravdiststats->AppendDataRow_NoReturn("Root, Grav dist., Grav. onset dist, Angle, Confidence, ");
+		gravdiststats->CarriageReturn();
 	}
 
 
@@ -2518,7 +2519,7 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 		gravdiststats.AppendDataRow_NoReturn(gravdiststring);*/
 		if (rootnum==0) sprintf(gravdiststring, "%i, %.1f, %.1f,", filenumber, largeScaleAngle, length_to_maxAreaPoint);
 		else sprintf(gravdiststring, "%.1f, %.1f,", largeScaleAngle, length_to_maxAreaPoint);// no file num
-		gravdiststats.AppendDataRow_NoReturn(gravdiststring);
+		gravdiststats->AppendDataRow_NoReturn(gravdiststring);
 
 		if (largeScaleAngle>grav_response_threshold && gravOnsetLength[rootnum]<0) {
 			gravOnsetLength[rootnum] = length_to_maxAreaPoint;
@@ -2834,9 +2835,9 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	subRootTxt<<endl;
 
 	if (doGravitropic){
-		gravdiststats.CarriageReturn();
+		gravdiststats->CarriageReturn();
 		sprintf(gravstring, "%i, %i", filenumber, num_grav_roots);
-		gravstats.AppendDataRow(gravstring);  // should store confidence as well?
+		gravstats->AppendDataRow(gravstring);  // should store confidence as well?
 	}
 
 	if (save_image) cvSaveImage(savepath, image);
@@ -3154,11 +3155,19 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	cvWaitKey(0);
 	if (numberOfManualAngleMeasures>0){
 		cvSaveImage(myspf("%s\\manualAngles.bmp",outputFolderString), image);
-		CStatsWriter manualAngleStats = CStatsWriter();
-		manualAngleStats.ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
+		CStatsWriter *manualAngleStats = new CStatsWriter();
+
+		manualAngleStats->ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
+
+		//manualAngleStats.ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
 		
 		for(int a=0; a<numberOfManualAngleMeasures; a++)
-			manualAngleStats.AppendDataRow(myspf("%.1f", manualAngles[a]));
+			//manualAngleStats.AppendDataRow(myspf("%.1f", manualAngles[a]));
+			manualAngleStats->AppendDataRow(myspf("%.1f", manualAngles[a]));
+
+
+		delete manualAngleStats;
+		manualAngleStats = NULL;
 	}
 
 	if (output!=NULL) cvReleaseImage(&output); 
@@ -4687,7 +4696,7 @@ void CMainCode::doRootTracking( UCHAR idealr, UCHAR idealg, UCHAR idealb, double
 	}
 	outlfile.close();
          
-    ofstream outrfile;
+    std::ofstream outrfile;
     outrfile.open("outRfile.txt");
     
 	//filling the right subroots

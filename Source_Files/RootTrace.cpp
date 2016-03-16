@@ -7,7 +7,7 @@
 #include "Form1.h"
 #include <stdio.h>
 
-using namespace RootTrace2;
+//using namespace RootTrace2;
 
 // [STAThreadAttribute] //K_I
 int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
