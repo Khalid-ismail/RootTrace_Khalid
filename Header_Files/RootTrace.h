@@ -10,7 +10,9 @@
 
 #include "MainCode.h"
 
-CMainCode m_main;
+//CMainCode m_main;
+
+CMainCode * m_main;
 
 const double processX = 1.0;//0.9
 const double processY = 1.0;//0.9

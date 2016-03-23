@@ -1246,8 +1246,12 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 
 }*/ //K_I deactivating save BG mask
 
-void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
-	
+//void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
+void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
+//void CMainCode::init(UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
+{
+	cout<< "Test2" << endl;
+	//char *filename = "Capture_00005.JPG";
 	//NULL all image pointers
 	image = originali = previousi = crop = tempimage = measuresi = measuresiTaboo = smoothedi = output = debuggraph = preview_lengthsi = i_copy = i_copy2 = last_image = base_image = NULL;
 
@@ -1290,7 +1294,7 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 
 	double lastLengths[max_roots];
 	for (int i=0; i<max_roots; i++)
-		lastLengths[i] = -1;
+		{lastLengths[i] = -1;}
 
 	CvPoint initialTipLocations[max_numroots];
 	int initialTipPathLocation[max_numroots];
@@ -1336,10 +1340,10 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 
 	num_roots=0;
 
-	char* argv[1];
+	/*char* argv[1];
 	argv[0] = "test";
 
-	const char* folder   = "test";
+	const char* folder   = "test";*/
 	
 	
 	char loadpath[255];
@@ -1367,7 +1371,7 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 
 	//load last image, for info
 	//char* last_filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenames->Length-1]); //K_I - Disable loading last image for time being
-	char* last_filename = filenames;
+	const char* last_filename = filenames;
 	last_image = cvLoadImage(last_filename);
 			// transform last image. Must be done or can break when cropping
 			if (flip_hor) {
@@ -1411,7 +1415,7 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	//mainWindowText(mainWindow_RT, "File number "+filenumber);
 	
 	//char* filename = (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filenames[filenumber]); //K_I
-	char* filename = filenames;
+	const char* filename = filenames;
 	sprintf(loadpath,    "%s", filename);
 
 	
@@ -1441,10 +1445,12 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	//base_image = cvCloneImage(originali);
 	
 	//MessageBox::Show("enableEnhancing = "+enableEnhancing);
-	if (enableEnhancing) interactiveEnhance(m_bilat_filter, m_med_filter, m_gaus_filter, m_suppressHor, m_bLocaLMaxFilter, m_bblowHighlights, m_blowHighlights, m_bgRemoval);
+	if (enableEnhancing)
+		{interactiveEnhance(m_bilat_filter, m_med_filter, m_gaus_filter, m_suppressHor, m_bLocaLMaxFilter, m_bblowHighlights, m_blowHighlights, m_bgRemoval);}
 
 
-	if (croprect.width!=-1) cropImages(croprect);
+	if (croprect.width!=-1)
+		{cropImages(croprect);}
 
 
 
@@ -1508,7 +1514,8 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 		
 
 	}
-	if (quitnow) break;
+	if (quitnow)
+	{break;}
 
 	//cvCopyImage(measuresi, measuresiTaboo); // now done to copy potentially enhanced measures image
 
@@ -1638,7 +1645,8 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	rootEnd.x   = ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-1]))->x;
 	rootEnd.y   = ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-1]))->y;
 	
-	if (filenumber==0) initialTipPathLocation[rootnum] = new_path_size-1;
+	if (filenumber==0)
+		{initialTipPathLocation[rootnum] = new_path_size-1;}
 	
 	// TODO trace through the graph, but bail out when probability falls?
 	double prob_running_total = 0;
@@ -3153,22 +3161,24 @@ void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, 
 	printf("Finished.");
 
 	cvWaitKey(0);
-	if (numberOfManualAngleMeasures>0){
+	/*if (numberOfManualAngleMeasures>0){
 		cvSaveImage(myspf("%s\\manualAngles.bmp",outputFolderString), image);
-		CStatsWriter *manualAngleStats = new CStatsWriter();
 
-		manualAngleStats->ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
+		//CStatsWrister *manualAngleStats = new CStatsWriter();
+		CStatsWriter manualAngleStats = CStatsWriter();
 
-		//manualAngleStats.ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
+		//manualAngleStats->ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
+
+		manualAngleStats.ChangeFile(myspf("%s\\manualAngles.csv",outputFolderString));
 		
 		for(int a=0; a<numberOfManualAngleMeasures; a++)
-			//manualAngleStats.AppendDataRow(myspf("%.1f", manualAngles[a]));
-			manualAngleStats->AppendDataRow(myspf("%.1f", manualAngles[a]));
+			{manualAngleStats.AppendDataRow(myspf("%.1f", manualAngles[a]));}
+			//manualAngleStats->AppendDataRow(myspf("%.1f", manualAngles[a]));
 
 
 		delete manualAngleStats;
 		manualAngleStats = NULL;
-	}
+	}*/ //K_I Temporary deleted
 
 	if (output!=NULL) cvReleaseImage(&output); 
 	if (image!=NULL) cvReleaseImage(&image); 

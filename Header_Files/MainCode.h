@@ -21,6 +21,8 @@ static double slider_BGpriorvalue = 0.99;
 static double upperHyst = 0.97;
 static double lowerHyst = 0.009;
 
+//const char *filenames = "Capture_00005.JPG";
+
 const bool cb_defaultToRoot = false;
 
 struct MyVertex : CvGraphVtx
@@ -81,7 +83,8 @@ class CMainCode {
 	CMainCode();
 	
 	void on_mouse( int event, int x, int y, int flags);
-	void init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/);//Motion mixture UNUSED locally??
+	void init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/);//Motion mixture UNUSED locally??
+	//void init(UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY);
 	static char* myspf(char* strToFormat, ...);				// jon's version of sprintf =)
 	static void imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colour);
 	static void imgTxt(IplImage *img, char *message, CvPoint pos, CvScalar colour, float fontsize);
