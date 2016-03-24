@@ -1639,8 +1639,8 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 	if (filenumber==0) code = cvWaitKey(10);
 	else code = 32;
 
-	while ( (goButtonPressed==false&&(/*code!=32 && */(rootnum==0 || rootnum==num_roots))) || bg_mask==NULL) {  //wait for space first time round UPDATE now space doesn't work - all from go button
-		
+	//while ( (goButtonPressed==false&&(/*code!=32 && */(rootnum==0 || rootnum==num_roots))) || bg_mask==NULL) {  //wait for space first time round UPDATE now space doesn't work - all from go button
+	while ( (num_roots <=3 && goButtonPressed==false && (/*code!=32 && */(rootnum==0 || rootnum==num_roots))) || bg_mask==NULL) {  //wait for space first time round UPDATE now space doesn't work - all from go button
 		checkKeyPresses(code);
 		if (quitnow) {
 			//mainWindowText(mainWindow, "Finished");	//K_I
