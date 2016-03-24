@@ -107,7 +107,8 @@ const int num_paths_to_test = 1; //2000 good. Use 1 for Dijkstra
 
 const double infinity = DBL_MAX; //infinity approx. 
 
-const float curvature_empty_flag = -500;
+//const float curvature_empty_flag = -500;
+float curvature_empty_flag = -500;
 
 //const double threshold_st_dev_trace = 5.5;// 3 ok. Bigger = more leniant
 const double num_st_devs = 1; // 1, the number of prob st devs outside of which vertices get pruned, was 0.5
@@ -1246,6 +1247,120 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 
 }*/ //K_I deactivating save BG mask
 
+void CMainCode::init2(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
+//void CMainCode::init(UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
+{
+	cout<< "Test2" << endl;
+
+	image = originali = previousi = crop = tempimage = measuresi = measuresiTaboo = smoothedi = output = debuggraph = preview_lengthsi = i_copy = i_copy2 = last_image = base_image = NULL;
+
+	//doGravitropic=false;
+	//doTipAngles=false;
+	//rotate_cw=false;
+	//rotate_ccw=false;
+	//flip_hor=false;
+
+	numberOfManualAngleMeasures=0;
+	manualAngleCount=0;
+
+	// remap input parameters
+	idealR = idealr;
+	idealG = idealg;
+	idealB = idealb;
+
+	setupParameters();
+
+	//Create zoomed window
+	cvNamedWindow("LiveZoom", CV_WINDOW_AUTOSIZE );
+	liveZoomImg = cvCreateImage(cvSize(liveZoomImg_width, liveZoomImg_height), 8, 3);
+	cvZero(liveZoomImg);
+	cvShowImage("LiveZoom", liveZoomImg);
+	cvWaitKey(1);
+
+	//Create tip trace image
+	IplImage* tipimage = cvCreateImage(cvSize(200, 200), 8, 3);
+	cvZero(tipimage);
+
+	for (int i=0; i<max_numroots; i++) {
+		gravOnsetLength[i] = -1;
+		gravOnsetAngle[i] = -1;
+	}
+
+	double lastLengths[max_roots];
+	for (int i=0; i<max_roots; i++)
+		{lastLengths[i] = -1;}
+
+	CvPoint initialTipLocations[max_numroots];
+	int initialTipPathLocation[max_numroots];
+	for (int j=0; j<max_numroots; j++) {
+		initialTipLocations[j] = cvPoint(0,0);
+		initialTipPathLocation[j] = 0;
+
+	}
+
+
+	/*if (filenames->Length::get()>max_files) {
+		MessageBox::Show("WARNING: maximum number of files ("+max_files+") exceeded. Exiting...");
+		exit(-10);
+	}*/ //K_I to be added later (More than a file)
+
+
+	//mainWindowGlobal = mainWindow; //K_I
+
+	//float curvatures[max_files][max_length][max_roots];
+	//float curvatures2[max_files][max_length][max_roots];
+	//float curvatures2[max_files,max_length,max_roots];
+	//float lengthForCurvature[max_files][max_length][max_roots];
+
+	float finalLengths[max_files][max_numroots];
+
+	vector<vector<vector<float>>> curvatures;
+	curvatures.resize(max_files);
+	for(int i=0; i<max_files; ++i)
+	{
+		curvatures[i].resize(max_length);
+		for(int j=0; j<max_length; ++j)
+			curvatures[i][j].resize(max_roots);
+	}
+
+
+
+
+
+
+/*	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
+	//array<float,3>^ curvatures2 = gcnew array<float,3>(max_files, max_length, max_roots); //store using new method
+	array<float,3>^ lengthForCurvature = gcnew array<float,3>(max_files, max_length, max_roots);*/
+
+	for (int temp1=0; temp1<max_files; temp1++)
+		for (int temp2=0; temp2<max_length; temp2++)
+			for (int temp3=0; temp3<max_roots; temp3++){
+			//curvatures[temp1][temp2][temp3] = curvature_empty_flag;
+				//curvatures2[temp1, temp2, temp3] = curvature_empty_flag;
+			}
+
+	/*array<float,2>^ finalLengths = gcnew array<float,2>(max_files, max_numroots);
+
+	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);*/ //K_I check the importance of this part
+
+	double calib_measures[3];
+
+	int filenumber = 0;
+
+	num_roots=0;
+
+	/*char* argv[1];
+	argv[0] = "test";
+
+	const char* folder   = "test";*/
+
+
+	char loadpath[255];
+	char savepath[255];
+
+
+}
+
 //void CMainCode::init(char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/) {
 void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
 //void CMainCode::init(UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY)
@@ -1313,24 +1428,46 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 
 	//mainWindowGlobal = mainWindow; //K_I
 
-	float curvatures[max_files][max_length][max_roots];
-	float curvatures2[max_files][max_length][max_roots];
-	float lengthForCurvature[max_files][max_length][max_roots];
+	//float curvatures[max_files][max_length][max_roots];
+	//float curvatures2[max_files][max_length][max_roots];
+	//float curvatures2[max_files,max_length,max_roots];
+	//float lengthForCurvature[max_files][max_length][max_roots];
 
 	float finalLengths[max_files][max_numroots];
+
+	vector<vector<vector<float>>> curvatures;
+	curvatures.resize(max_files);
+	for(int i=0; i<max_files; ++i)
+	{
+		curvatures[i].resize(max_length);
+		for(int j=0; j<max_length; ++j)
+			curvatures[i][j].resize(max_roots);
+	}
+
+	vector<vector<vector<float>>> lengthForCurvature;
+	lengthForCurvature.resize(max_files);
+	for(int i=0; i<max_files; ++i)
+	{
+		lengthForCurvature[i].resize(max_length);
+		for(int j=0; j<max_length; ++j)
+			lengthForCurvature[i][j].resize(max_roots);
+	}
+
+
 
 
 /*	array<float,3>^ curvatures = gcnew array<float,3>(max_files, max_length, max_roots);
 	//array<float,3>^ curvatures2 = gcnew array<float,3>(max_files, max_length, max_roots); //store using new method
-	array<float,3>^ lengthForCurvature = gcnew array<float,3>(max_files, max_length, max_roots);
+	array<float,3>^ lengthForCurvature = gcnew array<float,3>(max_files, max_length, max_roots);*/
+
 	for (int temp1=0; temp1<max_files; temp1++) 
 		for (int temp2=0; temp2<max_length; temp2++)
 			for (int temp3=0; temp3<max_roots; temp3++){
-			curvatures[temp1, temp2, temp3] = curvature_empty_flag;
-			//curvatures2[temp1, temp2, temp3] = curvature_empty_flag;
+			curvatures[temp1][temp2][temp3] = curvature_empty_flag;
+				//curvatures2[temp1, temp2, temp3] = curvature_empty_flag;
 			}
 
-	array<float,2>^ finalLengths = gcnew array<float,2>(max_files, max_numroots);
+	/*array<float,2>^ finalLengths = gcnew array<float,2>(max_files, max_numroots);
 
 	RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow);*/ //K_I check the importance of this part
 
@@ -1671,7 +1808,7 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 			if (debug) cout << "  mean prob: "<< prob_mean<<endl;
 
 			 //CHECK WHICH PATH THIS WORKS ON! POSSIBLE BUG? Spotted when moved graph traversal to a separate method
-			/*if (do_line_end_finding&&vtxn>25 && log10(min(myv1->prob_non_normalized, 1)) < prob_mean - (threshold_st_dev_trace*st_dev)) 
+			/*if (do_line_end_finding&&vtxn>25 && log10(min(myv1->prob_non_normalized, 1)) < prob_mean - (threshold_st_dev_trace*st_dev))
 			{
 				cout <<" BREAK! End of root found"<<endl;
 				//path.dist = myv1->dij_dist;  //distance to this node
@@ -2597,7 +2734,7 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 	
 	if (evolveTipPoints) tipPointsNumToFit = max(new_path_size - initialTipPathLocation[rootnum], 3); //fit through newly grown points, if this checked
 
-	if (/*initialTipPathLocation[rootnum]*/ new_path_size>tipPointsNumToFit+1  && new_path_size>=initialTipPathLocation[rootnum] && doTipAngles) {//we have some points.. changed to compare numToFit to CURRENT path length, and test to make sure root is longer now than it was to start!, 15/6/2010 
+	if (/*initialTipPathLocation[rootnum]*/ new_path_size>tipPointsNumToFit+1  && new_path_size>=initialTipPathLocation[rootnum] && doTipAngles) {//we have some points.. changed to compare numToFit to CURRENT path length, and test to make sure root is longer now than it was to start!, 15/6/2010
 
 	//Fit line to last few points to get tangent at tip
 	// e.g. ((MyVertex*) cvGetGraphVtx(g, paths[0].path[new_path_size-1]))->x;

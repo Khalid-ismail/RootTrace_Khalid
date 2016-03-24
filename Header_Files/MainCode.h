@@ -83,6 +83,7 @@ class CMainCode {
 	CMainCode();
 	
 	void on_mouse( int event, int x, int y, int flags);
+	void init2(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/);//Motion mixture UNUSED locally??
 	void init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY/*, double motionMixture*//*, System::Windows::Forms::Form^ mainWindow*/);//Motion mixture UNUSED locally??
 	//void init(UCHAR idealr, UCHAR idealg, UCHAR idealb, UCHAR tb_lr, double proSigmaX, double proSigmaY);
 	static char* myspf(char* strToFormat, ...);				// jon's version of sprintf =)

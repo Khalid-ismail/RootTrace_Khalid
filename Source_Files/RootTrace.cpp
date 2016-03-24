@@ -48,6 +48,7 @@ int main(void)
 	//read_file(argv[1]);
 	m_main = new CMainCode();
 	//m_main.init(filename, idealr, idealg, idealb, tb_lr, processX, processY/*, this->motionMixture*//*, this*/); //K_I
+	//m_main->init2(filename, idealr, idealg, idealb, tb_lr, processX, processY);
 	m_main->init(filename, idealr, idealg, idealb, tb_lr, processX, processY);
 	//m_main->init(idealr, idealg, idealb, tb_lr, processX, processY);
 
