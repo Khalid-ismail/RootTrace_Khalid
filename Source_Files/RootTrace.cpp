@@ -10,8 +10,8 @@
 //using namespace RootTrace2;
 
 // [STAThreadAttribute] //K_I
-//int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
-int main(void)
+int main(int argc, char *argv[]/*array<System::String ^> ^args*/) //K_I
+//int main(void)
 {
 	
 	// Enabling Windows XP visual effects before any controls are created
@@ -25,8 +25,8 @@ int main(void)
 
 	cout<< "Test1" << endl;
 
-	const char *filename = "Capture_00005.JPG";
-	//char *filename = NULL;
+	//const char *filename = "Capture_00005.JPG";
+	char *filename = argv[1];
 
 /*	if (argc < 1)
 	{
