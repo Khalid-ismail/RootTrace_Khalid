@@ -1394,7 +1394,7 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 	//liveZoomImg = cvCreateImage(cvSize(liveZoomImg_width, liveZoomImg_height), 8, 3);
 	//cvZero(liveZoomImg);
 	//cvShowImage("LiveZoom", liveZoomImg);
-	cvWaitKey(1);
+	//cvWaitKey(1);
 
 	//Create tip trace image
 	IplImage* tipimage = cvCreateImage(cvSize(200, 200), 8, 3);
