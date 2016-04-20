@@ -1391,7 +1391,7 @@ void CMainCode::init(const char *filenames, UCHAR idealr, UCHAR idealg, UCHAR id
 
 	//Create zoomed window
 	//cvNamedWindow("LiveZoom", CV_WINDOW_AUTOSIZE );
-	liveZoomImg = cvCreateImage(cvSize(liveZoomImg_width, liveZoomImg_height), 8, 3);
+	//liveZoomImg = cvCreateImage(cvSize(liveZoomImg_width, liveZoomImg_height), 8, 3);
 	cvZero(liveZoomImg);
 	cvShowImage("LiveZoom", liveZoomImg);
 	cvWaitKey(1);
