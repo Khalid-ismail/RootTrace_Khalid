@@ -27,6 +27,9 @@ OF SUCH DAMAGE.
 #include "../Header_Files/stdafx.h"
 #include "cv.h"
 #include "highgui.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/imgcodecs.hpp>
 #include "../Header_Files/MainCode.h"
 #include <iostream>
 #include <fstream>
@@ -47,6 +50,7 @@ OF SUCH DAMAGE.
 #include "../Header_Files/queue.h"
 #include "../Header_Files/stack.h"
 
+using namespace cv;
  
 using namespace std;
 //using namespace System::Windows::Forms; //K_I
@@ -1138,6 +1142,8 @@ IplImage* CMainCode::loadImage(const char* loadpath) {
 
 	//RootTrace2::Form1^ mainWindow_RT = ((RootTrace2::Form1^)mainWindow); //K_I
 	IplImage* limage;
+	Mat image;
+	//IplImage* loadedi = cvLoadImage(loadpath);
 	IplImage* loadedi = cvLoadImage(loadpath);
 	if (loadedi==NULL) {
 		//MessageBox::Show("Sorry, cannot load that file.", "Bye", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
